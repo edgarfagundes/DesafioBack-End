@@ -10,6 +10,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
+import javax.persistence.EntityNotFoundException;
 import java.util.Optional;
 
 @Service
@@ -18,20 +19,49 @@ public class ParticipanteService {
     @Autowired
     ParticipanteRepository participanteRepository;
 
+    @Autowired
+    CompromissoService compromissoService;
+
     public ResponseEntity<Optional<Participante>> findById(Long id) {
         try {
-            return new ResponseEntity(participanteRepository .findById(id), HttpStatus.OK);
+            return new ResponseEntity(participanteRepository.findById(id), HttpStatus.OK);
         } catch (NullPointerException n) {
-         return new ResponseEntity(n.getMessage(), HttpStatus.NOT_FOUND);
-        }
-    }
-
-    public  ResponseEntity<Page<Participante>> findAll(Pageable pageable) {
-        try {
-            return new ResponseEntity(participanteRepository .findAll(pageable), HttpStatus.OK);
-        }catch (NullPointerException n){
             return new ResponseEntity(n.getMessage(), HttpStatus.NOT_FOUND);
         }
     }
 
+    public ResponseEntity<Page<Participante>> findAll(Pageable pageable) {
+        try {
+            return new ResponseEntity(participanteRepository.findAll(pageable), HttpStatus.OK);
+        } catch (NullPointerException n) {
+            return new ResponseEntity(n.getMessage(), HttpStatus.NOT_FOUND);
+        }
+    }
+
+    public ResponseEntity<Participante> save(Participante participante) {
+        try {
+            return new ResponseEntity(participanteRepository.save(participante), HttpStatus.ACCEPTED);
+
+        } catch (NullPointerException n) {
+            throw new NullPointerException();
+        }
+    }
+
+    public ResponseEntity<Participante> update(Participante participante) {
+        try {
+            return new ResponseEntity(participanteRepository.save(participante), HttpStatus.ACCEPTED);
+
+        } catch (NullPointerException n) {
+            throw new NullPointerException();
+        }
+    }
+
+    public void delete(Long id) {
+        Optional<Participante> participante = participanteRepository.findById(id);
+        if (!(participanteRepository.existsById(id))){
+            throw new NullPointerException();
+        } else {
+            participanteRepository.delete(participante);
+        }
+    }
 }
