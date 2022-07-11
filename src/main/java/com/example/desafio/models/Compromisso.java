@@ -6,12 +6,10 @@ import com.sun.istack.NotNull;
 import javax.persistence.Entity;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToOne;
-import javax.persistence.PrimaryKeyJoinColumn;
 import java.util.Date;
 import java.util.List;
 
 @Entity
-@PrimaryKeyJoinColumn(name = "id")
 public class Compromisso extends GeradorId {
 
     @NotNull
@@ -40,6 +38,7 @@ public class Compromisso extends GeradorId {
     }
 
     public Compromisso() {
+
     }
 
     public Date getDataHora() {
