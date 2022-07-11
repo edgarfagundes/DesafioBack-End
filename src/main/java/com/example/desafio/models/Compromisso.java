@@ -6,10 +6,12 @@ import com.sun.istack.NotNull;
 import javax.persistence.Entity;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToOne;
+import javax.persistence.PrimaryKeyJoinColumn;
 import java.util.Date;
 import java.util.List;
 
 @Entity
+@PrimaryKeyJoinColumn(name = "id")
 public class Compromisso extends GeradorId {
 
     @NotNull
@@ -29,6 +31,16 @@ public class Compromisso extends GeradorId {
     @NotNull
     private Situacao situacao;
 
+    public Compromisso(Date dataHora, String descricao, List<Participante> participantes, Localidade localidade, Situacao situacao) {
+        this.dataHora = dataHora;
+        this.descricao = descricao;
+        this.participantes = participantes;
+        this.localidade = localidade;
+        this.situacao = situacao;
+    }
+
+    public Compromisso() {
+    }
 
     public Date getDataHora() {
         return dataHora;

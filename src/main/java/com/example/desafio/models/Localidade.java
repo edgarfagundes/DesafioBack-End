@@ -3,9 +3,11 @@ package com.example.desafio.models;
 import com.sun.istack.NotNull;
 
 import javax.persistence.Entity;
+import javax.persistence.PrimaryKeyJoinColumn;
 import java.util.Locale;
 
 @Entity
+@PrimaryKeyJoinColumn(name = "id")
 public class Localidade extends GeradorId{
 
 

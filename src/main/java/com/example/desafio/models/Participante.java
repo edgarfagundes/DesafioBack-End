@@ -3,8 +3,10 @@ package com.example.desafio.models;
 import com.sun.istack.NotNull;
 
 import javax.persistence.Entity;
+import javax.persistence.PrimaryKeyJoinColumn;
 
 @Entity
+@PrimaryKeyJoinColumn(name = "id")
 public class Participante extends GeradorId{
 
     @NotNull

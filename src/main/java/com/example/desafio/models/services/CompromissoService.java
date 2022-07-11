@@ -1,7 +1,7 @@
 package com.example.desafio.models.services;
 
 import com.example.desafio.models.Compromisso;
-import com.example.desafio.models.Compromisso;
+import com.example.desafio.models.enums.Situacao;
 import com.example.desafio.models.repository.CompromissoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -9,6 +9,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.web.client.HttpClientErrorException;
 
 import java.util.Optional;
 
@@ -46,17 +47,20 @@ public class CompromissoService {
     public ResponseEntity<Compromisso> update(Compromisso Compromisso) {
         try {
             return new ResponseEntity(compromissoRepository.save(Compromisso), HttpStatus.ACCEPTED);
-
         } catch (NullPointerException n) {
             throw new NullPointerException();
         }
     }
 
     public void delete(Compromisso compromisso) {
-        if (compromisso.equals(null)){
-            throw new NullPointerException();
-        } else {
-            compromissoRepository.delete(compromisso);
+        try {
+            if (compromisso.getSituacao().equals(Situacao.EXCUTADO) || compromisso.getSituacao().equals(Situacao.CANCELADO)) {
+                throw new NullPointerException("Sem permissão");
+            } else {
+                compromissoRepository.delete(compromisso);
+            }
+        } catch (NullPointerException n) {
+            n.getMessage();
         }
     }
 }

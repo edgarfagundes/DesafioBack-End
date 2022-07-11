@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.naming.NoPermissionException;
 import java.util.Optional;
 
 @RestController
@@ -46,7 +47,7 @@ public class CompromissoController {
     }
 
     @DeleteMapping("/deleteCompromisso/{id}")
-    public void delete(Compromisso compromisso){
+    public void delete(@PathVariable Long id, @RequestBody Compromisso compromisso) {
         compromissoService.delete(compromisso);
     }
 }

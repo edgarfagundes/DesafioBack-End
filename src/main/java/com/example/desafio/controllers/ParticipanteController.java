@@ -18,7 +18,7 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.Optional;
 
 @RestController
-@RequestMapping("/particpante")
+@RequestMapping("/participante")
 public class ParticipanteController {
 
     @Autowired
