@@ -45,9 +45,9 @@ public class LocalidadeController {
         return localidadeService.update(localidade);
     }
 
-    @DeleteMapping("/deleteParticipante/{id}")
-    public void deleteParticipante(@PathVariable Long id){
-        localidadeService.delete(id);
+    @DeleteMapping("/deleteParticipante")
+    public void deleteParticipante(Localidade localidade){
+        localidadeService.delete(localidade);
     }
 
 }

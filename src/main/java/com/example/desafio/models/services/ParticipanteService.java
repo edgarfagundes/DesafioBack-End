@@ -56,9 +56,8 @@ public class ParticipanteService {
         }
     }
 
-    public void delete(Long id) {
-        Optional<Participante> participante = participanteRepository.findById(id);
-        if (!(participanteRepository.existsById(id))){
+    public void delete(Participante participante) {
+        if (participante.equals(null)){
             throw new NullPointerException();
         } else {
             participanteRepository.delete(participante);

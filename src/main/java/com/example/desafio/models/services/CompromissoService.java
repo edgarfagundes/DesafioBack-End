@@ -9,7 +9,6 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.PathVariable;
 
 import java.util.Optional;
 
@@ -53,9 +52,8 @@ public class CompromissoService {
         }
     }
 
-    public void delete(Long id) {
-        Optional<Compromisso> compromisso = compromissoRepository.findById(id);
-        if (!(compromissoRepository.existsById(id))){
+    public void delete(Compromisso compromisso) {
+        if (compromisso.equals(null)){
             throw new NullPointerException();
         } else {
             compromissoRepository.delete(compromisso);

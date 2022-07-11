@@ -52,9 +52,8 @@ public class LocalidadeService {
         }
     }
 
-    public void delete(Long id) {
-        Optional<Localidade> localidade = localidadeRepository.findById(id);
-        if (!(localidadeRepository.existsById(id))){
+    public void delete(Localidade localidade) {
+        if (localidade.equals(null)){
             throw new NullPointerException();
         } else {
             localidadeRepository.delete(localidade);

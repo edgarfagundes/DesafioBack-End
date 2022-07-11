@@ -9,6 +9,4 @@ import java.util.Optional;
 
 @Repository
 public interface ParticipanteRepository extends JpaRepository<Participante, Long> {
-
-    void delete(Optional<Participante> participante);
 }

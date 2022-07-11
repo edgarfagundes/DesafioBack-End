@@ -8,5 +8,4 @@ import java.util.Optional;
 
 @Repository
 public interface LocalidadeRepository extends JpaRepository<Localidade, Long> {
-    void delete(Optional<Localidade> localidade);
 }

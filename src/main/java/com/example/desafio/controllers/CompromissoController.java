@@ -35,18 +35,18 @@ public class CompromissoController {
         return compromissoService.findById(id);
     }
 
-    @PostMapping("/adicionarParticipante")
-    public ResponseEntity<Compromisso> addParticipante(@RequestBody Compromisso participante) {
-        return compromissoService.save(participante);
+    @PostMapping("/adicionarComprimisso")
+    public ResponseEntity<Compromisso> addCompromisso(@RequestBody Compromisso compromisso) {
+        return compromissoService.save(compromisso);
     }
 
-    @PutMapping("/updateParticipante/{id}")
-    public ResponseEntity<Compromisso> updateParticipante(@PathVariable Long id,@RequestBody Compromisso participante) {
-        return compromissoService.update(participante);
+    @PutMapping("/updateCompromisso/{id}")
+    public ResponseEntity<Compromisso> updateCompromisso(@PathVariable Long id,@RequestBody Compromisso compromisso) {
+        return compromissoService.update(compromisso);
     }
 
-    @DeleteMapping("/deleteParticipante/{id}")
-    public void deleteParticipante(@PathVariable Long id){
-        compromissoService.delete(id);
+    @DeleteMapping("/deleteCompromisso/{id}")
+    public void delete(Compromisso compromisso){
+        compromissoService.delete(compromisso);
     }
 }

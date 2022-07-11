@@ -13,5 +13,4 @@ public interface CompromissoRepository extends JpaRepository<Compromisso, Long> 
 
     List<Compromisso> findAllByParticipantes(Participante participantes);
 
-    void delete(Optional<Compromisso> compromisso);
 }

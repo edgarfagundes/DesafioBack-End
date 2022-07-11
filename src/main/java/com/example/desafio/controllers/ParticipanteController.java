@@ -44,8 +44,8 @@ public class ParticipanteController {
         return participanteService.update(participante);
     }
 
-    @DeleteMapping("/deleteParticipante/{id}")
-    public void deleteParticipante(@PathVariable Long id){
-        participanteService.delete(id);
+    @DeleteMapping("/deleteParticipante")
+    public void deleteParticipante(Participante participante){
+        participanteService.delete(participante);
     }
 }
