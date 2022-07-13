@@ -51,8 +51,14 @@ public class CompromissoService {
                     compromissoRepository.existsById(id) && compromissoRepository.findById(id).get().getSituacao().equals(Situacao.CANCELADO)) {
                 throw new IllegalArgumentException("Não rolou");
             }
-            return this.compromissoRepository.save(compromisso);
+            c.setDataHora(compromisso.getDataHora());
+            c.setDescricao(compromisso.getDescricao());
+            c.setParticipantes(compromisso.getParticipantes());
+            c.setLocalidade(compromisso.getLocalidade());
+            c.setSituacao(compromisso.getSituacao());
+            return this.compromissoRepository.save(c);
         });
+        return null;
     }
 
     public void delete(Long id) {
@@ -64,7 +70,7 @@ public class CompromissoService {
              else {
                  this.compromissoRepository.deleteById(id);
              }
-            return id;
+            return null;
         });
     }
 }
