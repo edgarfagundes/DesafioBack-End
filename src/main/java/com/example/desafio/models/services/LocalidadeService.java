@@ -18,34 +18,36 @@ public class LocalidadeService {
     @Autowired
     LocalidadeRepository localidadeRepository;
 
-    public ResponseEntity<Optional<Localidade>> findById(Long id) {
+    public Optional<Localidade> findById(Long id) {
         try {
-            return new ResponseEntity(localidadeRepository.findById(id), HttpStatus.OK);
+            return localidadeRepository.findById(id);
         } catch (NullPointerException n) {
-            return new ResponseEntity(n.getMessage(), HttpStatus.NOT_FOUND);
+            n.getMessage();
         }
+        return null;
     }
 
-    public ResponseEntity<Page<Localidade>> findAll(Pageable pageable) {
+    public Page<Localidade> findAll(Pageable pageable) {
         try {
-            return new ResponseEntity(localidadeRepository.findAll(pageable), HttpStatus.OK);
+            return localidadeRepository.findAll(pageable);
         } catch (NullPointerException n) {
-            return new ResponseEntity(n.getMessage(), HttpStatus.NOT_FOUND);
+            n.getMessage();
         }
+        return null;
     }
 
-    public ResponseEntity<Localidade> save(Localidade participante) {
+    public Localidade save(Localidade participante) {
         try {
-            return new ResponseEntity(localidadeRepository.save(participante), HttpStatus.ACCEPTED);
+            return localidadeRepository.save(participante);
 
         } catch (NullPointerException n) {
             throw new NullPointerException();
         }
     }
 
-    public ResponseEntity<Localidade> update(Localidade localidade) {
+    public Localidade update(Localidade localidade) {
         try {
-            return new ResponseEntity(localidadeRepository.save(localidade), HttpStatus.ACCEPTED);
+            return localidadeRepository.save(localidade);
 
         } catch (NullPointerException n) {
             throw new NullPointerException();

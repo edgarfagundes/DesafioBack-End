@@ -26,22 +26,22 @@ public class LocalidadeController {
     LocalidadeService localidadeService;
 
     @GetMapping
-    public ResponseEntity<Page<Localidade>> findAll(Pageable pageable) {
+    public Page<Localidade> findAll(Pageable pageable) {
         return localidadeService.findAll(pageable);
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Optional<Localidade>> findById(@PathVariable Long id) {
+    public Optional<Localidade> findById(@PathVariable Long id) {
         return localidadeService.findById(id);
     }
 
     @PostMapping("/adicionarParticipante")
-    public ResponseEntity<Localidade> addParticipante(@RequestBody Localidade localidade) {
+    public Localidade addParticipante(@RequestBody Localidade localidade) {
         return localidadeService.save(localidade);
     }
 
     @PutMapping("/updateParticipante/{id}")
-    public ResponseEntity<Localidade> updateParticipante(@PathVariable Long id,@RequestBody Localidade localidade) {
+    public Localidade updateParticipante(@PathVariable Long id,@RequestBody Localidade localidade) {
         return localidadeService.update(localidade);
     }
 

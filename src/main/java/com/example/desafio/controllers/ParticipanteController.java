@@ -25,17 +25,17 @@ public class ParticipanteController {
     ParticipanteService participanteService;
 
     @GetMapping
-    public ResponseEntity<Page<Participante>> findAll(Pageable pageable) {
+    public Page<Participante> findAll(Pageable pageable) {
         return participanteService.findAll(pageable);
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Optional<Participante>> findById(@PathVariable Long id) {
+    public Optional<Participante> findById(@PathVariable Long id) {
         return participanteService.findById(id);
     }
 
     @PostMapping("/adicionarParticipante")
-    public ResponseEntity<Participante> addParticipante(@RequestBody Participante participante) {
+    public Participante addParticipante(@RequestBody Participante participante) {
         return participanteService.save(participante);
     }
 

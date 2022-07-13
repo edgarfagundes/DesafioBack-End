@@ -1,11 +1,16 @@
 package com.example.desafio.models;
 
 import com.example.desafio.models.enums.Situacao;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.sun.istack.NotNull;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToOne;
+import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.List;
 
@@ -13,23 +18,23 @@ import java.util.List;
 public class Compromisso extends GeradorId {
 
     @NotNull
-    private Date dataHora;
+    private String dataHora;
 
     @NotNull
     private String descricao;
 
     @NotNull
-    @ManyToMany
+    @ManyToMany(cascade = CascadeType.ALL)
     private List<Participante> participantes;
 
     @NotNull
-    @OneToOne
+    @OneToOne(cascade = CascadeType.ALL)
     private Localidade localidade;
 
     @NotNull
     private Situacao situacao;
 
-    public Compromisso(Date dataHora, String descricao, List<Participante> participantes, Localidade localidade, Situacao situacao) {
+    public Compromisso(String dataHora, String descricao, List<Participante> participantes, Localidade localidade, Situacao situacao) {
         this.dataHora = dataHora;
         this.descricao = descricao;
         this.participantes = participantes;
@@ -41,11 +46,11 @@ public class Compromisso extends GeradorId {
 
     }
 
-    public Date getDataHora() {
+    public String getDataHora() {
         return dataHora;
     }
 
-    public void setDataHora(Date dataHora) {
+    public void setDataHora(String dataHora) {
         this.dataHora = dataHora;
     }
 

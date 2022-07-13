@@ -22,25 +22,27 @@ public class ParticipanteService {
     @Autowired
     CompromissoService compromissoService;
 
-    public ResponseEntity<Optional<Participante>> findById(Long id) {
+    public Optional<Participante> findById(Long id) {
         try {
-            return new ResponseEntity(participanteRepository.findById(id), HttpStatus.OK);
+            return participanteRepository.findById(id);
         } catch (NullPointerException n) {
-            return new ResponseEntity(n.getMessage(), HttpStatus.NOT_FOUND);
+            n.getMessage();
         }
+        return null;
     }
 
-    public ResponseEntity<Page<Participante>> findAll(Pageable pageable) {
+    public Page<Participante> findAll(Pageable pageable) {
         try {
-            return new ResponseEntity(participanteRepository.findAll(pageable), HttpStatus.OK);
+            return participanteRepository.findAll(pageable);
         } catch (NullPointerException n) {
-            return new ResponseEntity(n.getMessage(), HttpStatus.NOT_FOUND);
+            n.getMessage();
         }
+        return null;
     }
 
-    public ResponseEntity<Participante> save(Participante participante) {
+    public Participante save(Participante participante) {
         try {
-            return new ResponseEntity(participanteRepository.save(participante), HttpStatus.ACCEPTED);
+            return participanteRepository.save(participante);
 
         } catch (NullPointerException n) {
             throw new NullPointerException();

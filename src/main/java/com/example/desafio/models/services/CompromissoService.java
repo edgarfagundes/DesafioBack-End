@@ -9,7 +9,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
-import org.springframework.web.client.HttpClientErrorException;
+import org.springframework.web.bind.annotation.RequestBody;
 
 import java.util.Optional;
 
@@ -19,48 +19,52 @@ public class CompromissoService {
     @Autowired
     CompromissoRepository compromissoRepository;
 
-    public ResponseEntity<Optional<Compromisso>> findById(Long id) {
+    public Optional<Compromisso> findById(Long id) {
         try {
-            return new ResponseEntity(compromissoRepository.findById(id), HttpStatus.OK);
-        } catch (NullPointerException n) {
-            return new ResponseEntity(n.getMessage(), HttpStatus.NOT_FOUND);
-        }
-    }
-
-    public ResponseEntity<Page<Compromisso>> findAll(Pageable pageable) {
-        try {
-            return new ResponseEntity(compromissoRepository.findAll(pageable), HttpStatus.OK);
-        } catch (NullPointerException n) {
-            return new ResponseEntity(n.getMessage(), HttpStatus.NOT_FOUND);
-        }
-    }
-
-    public ResponseEntity<Compromisso> save(Compromisso Compromisso) {
-        try {
-            return new ResponseEntity(compromissoRepository.save(Compromisso), HttpStatus.ACCEPTED);
-
-        } catch (NullPointerException n) {
-            throw new NullPointerException();
-        }
-    }
-
-    public ResponseEntity<Compromisso> update(Compromisso Compromisso) {
-        try {
-            return new ResponseEntity(compromissoRepository.save(Compromisso), HttpStatus.ACCEPTED);
-        } catch (NullPointerException n) {
-            throw new NullPointerException();
-        }
-    }
-
-    public void delete(Compromisso compromisso) {
-        try {
-            if (compromisso.getSituacao().equals(Situacao.EXCUTADO) || compromisso.getSituacao().equals(Situacao.CANCELADO)) {
-                throw new NullPointerException("Sem permissão");
-            } else {
-                compromissoRepository.delete(compromisso);
-            }
+            return compromissoRepository.findById(id);
         } catch (NullPointerException n) {
             n.getMessage();
         }
+        return null;
+    }
+
+    public Page<Compromisso> findAll(Pageable pageable) {
+        try {
+            return compromissoRepository.findAll(pageable);
+        } catch (NullPointerException n) {
+            n.getMessage();
+        }
+        return null;
+    }
+
+    public Compromisso save(Compromisso compromisso) {
+        try {
+            return compromissoRepository.save(compromisso);
+        } catch (NullPointerException n) {
+            throw new NullPointerException();
+        }
+    }
+
+    public Compromisso update(Long id, Compromisso compromisso) {
+        this.compromissoRepository.findById(id).map(c -> {
+            if (compromissoRepository.existsById(id) && compromissoRepository.findById(id).get().getSituacao().equals(Situacao.EXECUTADO) ||
+                    compromissoRepository.existsById(id) && compromissoRepository.findById(id).get().getSituacao().equals(Situacao.CANCELADO)) {
+                throw new IllegalArgumentException("Não rolou");
+            }
+            return this.compromissoRepository.save(compromisso);
+        });
+    }
+
+    public void delete(Long id) {
+        this.compromissoRepository.findById(id).map(c -> {
+            if (compromissoRepository.existsById(id) && compromissoRepository.findById(id).get().getSituacao().equals(Situacao.EXECUTADO) ||
+                    compromissoRepository.existsById(id) && compromissoRepository.findById(id).get().getSituacao().equals(Situacao.CANCELADO)) {
+                throw new IllegalArgumentException("Entity cannot be deleted");
+            }
+             else {
+                 this.compromissoRepository.deleteById(id);
+             }
+            return id;
+        });
     }
 }

@@ -10,13 +10,12 @@ import java.util.Locale;
 @PrimaryKeyJoinColumn(name = "id")
 public class Localidade extends GeradorId{
 
-
     @NotNull
     private String nome;
 
-    private Locale longitude;
+    private String longitude;
 
-    private Locale latitude;
+    private String latitude;
 
     public String getNome() {
         return nome;
@@ -26,19 +25,19 @@ public class Localidade extends GeradorId{
         this.nome = nome;
     }
 
-    public Locale getLongitude() {
+    public String getLongitude() {
         return longitude;
     }
 
-    public void setLongitude(Locale longitude) {
+    public void setLongitude(String longitude) {
         this.longitude = longitude;
     }
 
-    public Locale getLatitude() {
+    public String getLatitude() {
         return latitude;
     }
 
-    public void setLatitude(Locale latitude) {
+    public void setLatitude(String latitude) {
         this.latitude = latitude;
     }
 }

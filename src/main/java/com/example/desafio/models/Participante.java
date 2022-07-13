@@ -13,7 +13,7 @@ public class Participante extends GeradorId{
     private String nome;
 
     @NotNull
-    private Integer telefone;
+    private String telefone;
 
 
     public String getNome() {
@@ -24,11 +24,11 @@ public class Participante extends GeradorId{
         this.nome = nome;
     }
 
-    public Integer getTelefone() {
+    public String getTelefone() {
         return telefone;
     }
 
-    public void setTelefone(Integer telefone) {
+    public void setTelefone(String telefone) {
         this.telefone = telefone;
     }
 }
