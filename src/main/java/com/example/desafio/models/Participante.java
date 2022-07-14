@@ -1,9 +1,12 @@
 package com.example.desafio.models;
 
 import com.sun.istack.NotNull;
+import net.bytebuddy.agent.builder.AgentBuilder;
 
 import javax.persistence.Entity;
+import javax.persistence.OneToMany;
 import javax.persistence.PrimaryKeyJoinColumn;
+import java.util.List;
 
 @Entity
 @PrimaryKeyJoinColumn(name = "id")
@@ -14,7 +17,6 @@ public class Participante extends GeradorId{
 
     @NotNull
     private String telefone;
-
 
     public String getNome() {
         return nome;
@@ -31,4 +33,5 @@ public class Participante extends GeradorId{
     public void setTelefone(String telefone) {
         this.telefone = telefone;
     }
+
 }

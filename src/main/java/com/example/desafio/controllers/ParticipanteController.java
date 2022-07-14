@@ -1,5 +1,6 @@
 package com.example.desafio.controllers;
 
+import com.example.desafio.models.Compromisso;
 import com.example.desafio.models.Participante;
 import com.example.desafio.models.services.ParticipanteService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -40,12 +41,12 @@ public class ParticipanteController {
     }
 
     @PutMapping("/updateParticipante/{id}")
-    public ResponseEntity<Participante> updateParticipante(@PathVariable Long id,@RequestBody Participante participante) {
-        return participanteService.update(participante);
+    public Participante updateParticipante(@PathVariable Long id,@RequestBody Participante participante) {
+        return participanteService.update(id, participante);
     }
 
-    @DeleteMapping("/deleteParticipante")
-    public void deleteParticipante(Participante participante){
-        participanteService.delete(participante);
+    @DeleteMapping("/deleteParticipante/{id}")
+    public void deleteParticipante(@PathVariable Long id){
+        participanteService.delete(id);
     }
 }

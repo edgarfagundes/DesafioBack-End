@@ -1,8 +1,11 @@
 package com.example.desafio.models.services;
 
+import com.example.desafio.models.Compromisso;
 import com.example.desafio.models.Participante;
 
+import com.example.desafio.models.repository.CompromissoRepository;
 import com.example.desafio.models.repository.ParticipanteRepository;
+import org.hibernate.validator.constraints.Range;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -20,7 +23,7 @@ public class ParticipanteService {
     ParticipanteRepository participanteRepository;
 
     @Autowired
-    CompromissoService compromissoService;
+    CompromissoRepository compromissoRepository;
 
     public Optional<Participante> findById(Long id) {
         try {
@@ -49,20 +52,22 @@ public class ParticipanteService {
         }
     }
 
-    public ResponseEntity<Participante> update(Participante participante) {
+    public Participante update(Long id, Participante participante) {
         try {
-            return new ResponseEntity(participanteRepository.save(participante), HttpStatus.ACCEPTED);
+            return participanteRepository.save(participante);
 
         } catch (NullPointerException n) {
             throw new NullPointerException();
         }
     }
 
-    public void delete(Participante participante) {
-        if (participante.equals(null)){
-            throw new NullPointerException();
-        } else {
-            participanteRepository.delete(participante);
-        }
+    public void delete(Long id) {
+        participanteRepository.findById(id).map( p -> {
+            if(compromissoRepository.findAllByParticipantes(p).isEmpty()){
+                Participante participante = participanteRepository.findById(id).get();
+                participanteRepository.delete(participante);
+            }
+            throw new NullPointerException("Não pode");
+        });
     }
 }
