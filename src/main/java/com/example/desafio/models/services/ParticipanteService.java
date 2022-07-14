@@ -53,12 +53,10 @@ public class ParticipanteService {
     }
 
     public Participante update(Long id, Participante participante) {
-        try {
-            return participanteRepository.save(participante);
-
-        } catch (NullPointerException n) {
-            throw new NullPointerException();
-        }
+       compromissoRepository.findAllByParticipantes(participante).stream().filter(p -> {
+          return p.getDataHora().equals(compromissoRepository.findAllByParticipantes(participante).get(0).getDataHora());
+       }).forEach(System.out::println);
+       return participante;
     }
 
     public void delete(Long id) {
