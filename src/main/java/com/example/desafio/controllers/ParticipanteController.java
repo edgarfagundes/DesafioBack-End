@@ -1,5 +1,6 @@
 package com.example.desafio.controllers;
 
+import com.example.desafio.models.Compromisso;
 import com.example.desafio.models.Participante;
 import com.example.desafio.models.services.ParticipanteService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -39,8 +40,8 @@ public class ParticipanteController {
 
     @PostMapping("/adicionarParticipante")
     @ResponseStatus(HttpStatus.CREATED)
-    public Participante addParticipante(@RequestBody Participante participante) {
-        return participanteService.save(participante);
+    public Participante addParticipante(@RequestBody Participante participante, Compromisso compromisso) {
+        return participanteService.save(participante, compromisso);
     }
 
     @PutMapping("/updateParticipante/{id}")

@@ -1,6 +1,7 @@
 package com.example.desafio.models.services;
 
 import com.example.desafio.models.Compromisso;
+import com.example.desafio.models.Participante;
 import com.example.desafio.models.enums.Situacao;
 import com.example.desafio.models.repository.CompromissoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,6 +12,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.RequestBody;
 
+import java.time.LocalDateTime;
 import java.util.Optional;
 
 @Service
@@ -37,12 +39,11 @@ public class CompromissoService {
         return null;
     }
 
-    public Compromisso save(Compromisso compromisso) {
-        try {
+    public Compromisso save(Compromisso compromisso, Participante participante) {
+        if (validateParticipante(participante, compromisso)){
             return compromissoRepository.save(compromisso);
-        } catch (NullPointerException n) {
-            throw new NullPointerException();
         }
+        throw new IllegalArgumentException("Num quero não");
     }
 
     public Compromisso update(Long id, Compromisso compromisso) {
@@ -72,5 +73,11 @@ public class CompromissoService {
              }
             return null;
         });
+    }
+
+    public boolean validateParticipante(Participante participante, Compromisso compromisso) {
+        return this.compromissoRepository.findAllByParticipantes(participante)
+                .stream()
+                .anyMatch(c -> Situacao.PENDENTE.equals(compromisso.getSituacao()) && compromisso.getDataHora().equals(c.getDataHora()));
     }
 }

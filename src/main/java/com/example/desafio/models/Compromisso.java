@@ -18,7 +18,7 @@ import java.util.List;
 public class Compromisso extends GeradorId {
 
     @NotNull
-    private String dataHora;
+    private LocalDateTime dataHora;
 
     @NotNull
     private String descricao;
@@ -34,7 +34,7 @@ public class Compromisso extends GeradorId {
     @NotNull
     private Situacao situacao;
 
-    public Compromisso(String dataHora, String descricao, List<Participante> participantes, Localidade localidade, Situacao situacao) {
+    public Compromisso(LocalDateTime dataHora, String descricao, List<Participante> participantes, Localidade localidade, Situacao situacao) {
         this.dataHora = dataHora;
         this.descricao = descricao;
         this.participantes = participantes;
@@ -46,11 +46,11 @@ public class Compromisso extends GeradorId {
 
     }
 
-    public String getDataHora() {
+    public LocalDateTime getDataHora() {
         return dataHora;
     }
 
-    public void setDataHora(String dataHora) {
+    public void setDataHora(LocalDateTime dataHora) {
         this.dataHora = dataHora;
     }
 
