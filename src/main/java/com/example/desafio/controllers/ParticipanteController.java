@@ -2,6 +2,8 @@ package com.example.desafio.controllers;
 
 import com.example.desafio.models.Compromisso;
 import com.example.desafio.models.Participante;
+import com.example.desafio.models.enums.Situacao;
+import com.example.desafio.models.services.CompromissoService;
 import com.example.desafio.models.services.ParticipanteService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -17,6 +19,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.List;
 import java.util.Optional;
 
 @RestController
@@ -25,6 +28,9 @@ public class ParticipanteController {
 
     @Autowired
     ParticipanteService participanteService;
+
+    @Autowired
+    CompromissoService compromissoService;
 
     @GetMapping
     @ResponseStatus(HttpStatus.OK)
@@ -38,15 +44,28 @@ public class ParticipanteController {
         return participanteService.findById(id);
     }
 
+    @GetMapping("/compromissoParticipante")
+    @ResponseStatus(HttpStatus.OK)
+    public List<Compromisso> listaCompromisso(@RequestBody Participante participante){
+        return compromissoService.listaCompromissoParticipante(participante);
+    }
+
+    @GetMapping("/compromissoParticipanteSituacao/{situacao}")
+    @ResponseStatus(HttpStatus.OK)
+    public List<Compromisso> listaCompromissoSituacao(@RequestBody Participante participante, @PathVariable Situacao situacao){
+        return compromissoService.listaCompromissoParticipanteSituacao(participante, situacao);
+    }
+
+
     @PostMapping("/adicionarParticipante")
     @ResponseStatus(HttpStatus.CREATED)
-    public Participante addParticipante(@RequestBody Participante participante, Compromisso compromisso) {
-        return participanteService.save(participante, compromisso);
+    public Participante addParticipante(@RequestBody Participante participante) {
+        return participanteService.save(participante);
     }
 
     @PutMapping("/updateParticipante/{id}")
     @ResponseStatus(HttpStatus.ACCEPTED)
-    public Participante updateParticipante(@PathVariable Long id,@RequestBody Participante participante) {
+    public Participante updateParticipante(@PathVariable Long id, @RequestBody Participante participante) {
         return participanteService.update(id, participante);
     }
 

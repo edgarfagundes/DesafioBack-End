@@ -46,9 +46,8 @@ public class ParticipanteService {
         return null;
     }
 
-    public Participante save(Participante participante, Compromisso compromisso) {
-
-        return participante;
+    public Participante save(Participante participante) {
+            return participanteRepository.save(participante);
     }
 
     public Participante update(Long id, Participante participante) {

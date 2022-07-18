@@ -12,7 +12,7 @@ import java.util.Optional;
 @Repository
 public interface CompromissoRepository extends JpaRepository<Compromisso, Long> {
 
-    List<Compromisso> findAllByParticipantes(Participante participantes);
+    List<Compromisso> findAllByParticipantes(Participante participante);
 
     List<Compromisso> findAllByParticipantes(Participante... participantes);
 }
