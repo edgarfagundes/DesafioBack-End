@@ -55,10 +55,10 @@ public class CompromissoService {
         return null;
     }
 
-    public Compromisso update(Participante participante, Compromisso compromisso) {
-        this.compromissoRepository.findById(participante.getId()).map(c -> {
-            if (compromissoRepository.existsById(participante.getId()) && compromissoRepository.findById(participante.getId()).get().getSituacao().equals(Situacao.EXECUTADO) ||
-                    compromissoRepository.existsById(participante.getId()) && compromissoRepository.findById(participante.getId()).get().getSituacao().equals(Situacao.CANCELADO)) {
+    public Compromisso update(Long id, Compromisso compromisso) {
+        this.compromissoRepository.findById(id).map(c -> {
+            if (compromissoRepository.existsById(id) && compromissoRepository.findById(id).get().getSituacao().equals(Situacao.EXECUTADO) ||
+                    compromissoRepository.existsById(id) && compromissoRepository.findById(id).get().getSituacao().equals(Situacao.CANCELADO)) {
                 throw new IllegalArgumentException("Não rolou");
             }
             c.setDataHora(compromisso.getDataHora());
