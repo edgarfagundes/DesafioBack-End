@@ -47,8 +47,8 @@ public class CompromissoController {
 
     @PutMapping("/updateCompromisso/{id}")
     @ResponseStatus(HttpStatus.ACCEPTED)
-    public Compromisso updateCompromisso(@PathVariable Long id, @RequestBody Compromisso compromisso) {
-        return compromissoService.update(id, compromisso);
+    public Compromisso updateCompromisso(Participante participante, Compromisso compromisso) {
+        return compromissoService.update(participante, compromisso);
     }
 
     @DeleteMapping("/deleteCompromisso/{id}")

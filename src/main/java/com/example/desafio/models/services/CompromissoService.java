@@ -40,16 +40,25 @@ public class CompromissoService {
     }
 
     public Compromisso save(Compromisso compromisso, Participante participante) {
-        if (validateParticipante(participante, compromisso)){
-            return compromissoRepository.save(compromisso);
-        }
-        throw new IllegalArgumentException("Num quero não");
+        this.compromissoRepository.findById(participante.getId()).map(c -> {
+            if (compromissoRepository.existsById(participante.getId()) && compromissoRepository.findById(participante.getId()).get().getSituacao().equals(Situacao.EXECUTADO) ||
+                    compromissoRepository.existsById(participante.getId()) && compromissoRepository.findById(participante.getId()).get().getSituacao().equals(Situacao.CANCELADO)) {
+                throw new IllegalArgumentException("Não rolou");
+            }
+            c.setDataHora(compromisso.getDataHora());
+            c.setDescricao(compromisso.getDescricao());
+            c.setParticipantes(compromisso.getParticipantes());
+            c.setLocalidade(compromisso.getLocalidade());
+            c.setSituacao(compromisso.getSituacao());
+            return this.compromissoRepository.save(c);
+        });
+        return null;
     }
 
-    public Compromisso update(Long id, Compromisso compromisso) {
-        this.compromissoRepository.findById(id).map(c -> {
-            if (compromissoRepository.existsById(id) && compromissoRepository.findById(id).get().getSituacao().equals(Situacao.EXECUTADO) ||
-                    compromissoRepository.existsById(id) && compromissoRepository.findById(id).get().getSituacao().equals(Situacao.CANCELADO)) {
+    public Compromisso update(Participante participante, Compromisso compromisso) {
+        this.compromissoRepository.findById(participante.getId()).map(c -> {
+            if (compromissoRepository.existsById(participante.getId()) && compromissoRepository.findById(participante.getId()).get().getSituacao().equals(Situacao.EXECUTADO) ||
+                    compromissoRepository.existsById(participante.getId()) && compromissoRepository.findById(participante.getId()).get().getSituacao().equals(Situacao.CANCELADO)) {
                 throw new IllegalArgumentException("Não rolou");
             }
             c.setDataHora(compromisso.getDataHora());
