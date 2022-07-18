@@ -19,7 +19,7 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.Optional;
 
 @RestController
-@RequestMapping("/localidade")
+@RequestMapping("/localidades")
 public class LocalidadeController {
 
     @Autowired
@@ -35,17 +35,17 @@ public class LocalidadeController {
         return localidadeService.findById(id);
     }
 
-    @PostMapping("/adicionarLocalidade")
+    @PostMapping
     public Localidade addLocalidade(@RequestBody Localidade localidade) {
         return localidadeService.save(localidade);
     }
 
-    @PutMapping("/updateLocalidade/{id}")
+    @PutMapping("{id}")
     public Localidade updateLocalidade(@PathVariable Long id,@RequestBody Localidade localidade) {
         return localidadeService.update(localidade);
     }
 
-    @DeleteMapping("/deleteLocalidade")
+    @DeleteMapping
     public void deleteLocalidade(Localidade localidade){
         localidadeService.delete(localidade);
     }

@@ -21,7 +21,7 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.Optional;
 
 @RestController
-@RequestMapping("/compromisso")
+@RequestMapping("/compromissos")
 public class CompromissoController {
 
     @Autowired
@@ -39,19 +39,19 @@ public class CompromissoController {
         return compromissoService.findById(id);
     }
 
-    @PostMapping("/adicionarCompromisso")
+    @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     public Compromisso addCompromisso(@RequestBody Compromisso compromisso, Participante participante) {
         return compromissoService.save(compromisso, participante);
     }
 
-    @PutMapping("/updateCompromisso/{id}")
+    @PutMapping("{id}")
     @ResponseStatus(HttpStatus.ACCEPTED)
     public Compromisso updateCompromisso(@PathVariable Long id, @RequestBody Compromisso compromisso) {
         return compromissoService.update(id, compromisso);
     }
 
-    @DeleteMapping("/deleteCompromisso/{id}")
+    @DeleteMapping("{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void delete(@PathVariable Long id) {
         compromissoService.delete(id);

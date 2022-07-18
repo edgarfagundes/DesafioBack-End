@@ -23,7 +23,7 @@ import java.util.List;
 import java.util.Optional;
 
 @RestController
-@RequestMapping("/participante")
+@RequestMapping("/participantes")
 public class ParticipanteController {
 
     @Autowired
@@ -44,32 +44,32 @@ public class ParticipanteController {
         return participanteService.findById(id);
     }
 
-    @GetMapping("/compromissoParticipante")
+    @GetMapping("/{id}/compromissos")
     @ResponseStatus(HttpStatus.OK)
     public Optional<Compromisso> listaCompromisso(@PathVariable Long id){
         return compromissoService.listaCompromissoParticipante(id);
     }
 
-    @GetMapping("/compromissoParticipanteSituacao/{situacao}")
+    @GetMapping("{situacao}")
     @ResponseStatus(HttpStatus.OK)
     public List<Compromisso> listaCompromissoSituacao(@PathVariable Long id, @PathVariable Situacao situacao){
         return compromissoService.listaCompromissoParticipanteSituacao(id, situacao);
     }
 
 
-    @PostMapping("/adicionarParticipante")
+    @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     public Participante addParticipante(@RequestBody Participante participante) {
         return participanteService.save(participante);
     }
 
-    @PutMapping("/updateParticipante/{id}")
+    @PutMapping("{id}")
     @ResponseStatus(HttpStatus.ACCEPTED)
     public Participante updateParticipante(@PathVariable Long id, @RequestBody Participante participante) {
         return participanteService.update(id, participante);
     }
 
-    @DeleteMapping("/deleteParticipante/{id}")
+    @DeleteMapping("{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void deleteParticipante(@PathVariable Long id){
         participanteService.delete(id);
