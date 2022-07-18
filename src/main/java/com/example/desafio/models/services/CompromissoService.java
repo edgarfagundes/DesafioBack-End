@@ -1,6 +1,7 @@
 package com.example.desafio.models.services;
 
 import com.example.desafio.models.Compromisso;
+import com.example.desafio.models.Historico;
 import com.example.desafio.models.Participante;
 import com.example.desafio.models.enums.Situacao;
 import com.example.desafio.models.repository.CompromissoRepository;
@@ -18,6 +19,9 @@ public class CompromissoService {
 
     @Autowired
     CompromissoRepository compromissoRepository;
+
+    @Autowired
+    HistoricoService historicoService;
 
     public Optional<Compromisso> findById(Long id) {
         try {
@@ -59,6 +63,7 @@ public class CompromissoService {
                     compromissoRepository.existsById(id) && compromissoRepository.findById(id).get().getSituacao().equals(Situacao.CANCELADO)) {
                 throw new IllegalArgumentException("Não rolou");
             }
+
             c.setDataHora(compromisso.getDataHora());
             c.setDescricao(compromisso.getDescricao());
             c.setParticipantes(compromisso.getParticipantes());
