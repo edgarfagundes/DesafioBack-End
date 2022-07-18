@@ -2,6 +2,7 @@ package com.example.desafio.models.services;
 
 import com.example.desafio.models.Localidade;
 import com.example.desafio.models.Participante;
+import com.example.desafio.models.repository.CompromissoRepository;
 import com.example.desafio.models.repository.LocalidadeRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -17,6 +18,9 @@ public class LocalidadeService {
 
     @Autowired
     LocalidadeRepository localidadeRepository;
+
+    @Autowired
+    CompromissoRepository compromissoRepository;
 
     public Optional<Localidade> findById(Long id) {
         try {
@@ -55,10 +59,9 @@ public class LocalidadeService {
     }
 
     public void delete(Localidade localidade) {
-        if (localidade.equals(null)){
-            throw new NullPointerException();
-        } else {
+        if (compromissoRepository.existsById(localidade.getId())){
             localidadeRepository.delete(localidade);
         }
+        throw new IllegalArgumentException("não rolou");
     }
 }

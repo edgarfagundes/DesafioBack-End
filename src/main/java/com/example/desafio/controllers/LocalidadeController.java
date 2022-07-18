@@ -1,7 +1,7 @@
 package com.example.desafio.controllers;
 
 import com.example.desafio.models.Localidade;
-import com.example.desafio.models.Participante;
+import com.example.desafio.models.Localidade;
 import com.example.desafio.models.services.LocalidadeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -35,18 +35,18 @@ public class LocalidadeController {
         return localidadeService.findById(id);
     }
 
-    @PostMapping("/adicionarParticipante")
-    public Localidade addParticipante(@RequestBody Localidade localidade) {
+    @PostMapping("/adicionarLocalidade")
+    public Localidade addLocalidade(@RequestBody Localidade localidade) {
         return localidadeService.save(localidade);
     }
 
-    @PutMapping("/updateParticipante/{id}")
-    public Localidade updateParticipante(@PathVariable Long id,@RequestBody Localidade localidade) {
+    @PutMapping("/updateLocalidade/{id}")
+    public Localidade updateLocalidade(@PathVariable Long id,@RequestBody Localidade localidade) {
         return localidadeService.update(localidade);
     }
 
-    @DeleteMapping("/deleteParticipante")
-    public void deleteParticipante(Localidade localidade){
+    @DeleteMapping("/deleteLocalidade")
+    public void deleteLocalidade(Localidade localidade){
         localidadeService.delete(localidade);
     }
 

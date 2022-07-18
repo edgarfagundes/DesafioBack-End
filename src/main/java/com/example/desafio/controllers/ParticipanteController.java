@@ -46,14 +46,14 @@ public class ParticipanteController {
 
     @GetMapping("/compromissoParticipante")
     @ResponseStatus(HttpStatus.OK)
-    public List<Compromisso> listaCompromisso(@RequestBody Participante participante){
-        return compromissoService.listaCompromissoParticipante(participante);
+    public Optional<Compromisso> listaCompromisso(@PathVariable Long id){
+        return compromissoService.listaCompromissoParticipante(id);
     }
 
     @GetMapping("/compromissoParticipanteSituacao/{situacao}")
     @ResponseStatus(HttpStatus.OK)
-    public List<Compromisso> listaCompromissoSituacao(@RequestBody Participante participante, @PathVariable Situacao situacao){
-        return compromissoService.listaCompromissoParticipanteSituacao(participante, situacao);
+    public List<Compromisso> listaCompromissoSituacao(@PathVariable Long id, @PathVariable Situacao situacao){
+        return compromissoService.listaCompromissoParticipanteSituacao(id, situacao);
     }
 
 

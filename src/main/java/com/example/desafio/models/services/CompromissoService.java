@@ -7,12 +7,8 @@ import com.example.desafio.models.repository.CompromissoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.RequestBody;
 
-import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -86,14 +82,14 @@ public class CompromissoService {
         });
     }
 
-    public List<Compromisso> listaCompromissoParticipanteSituacao(Participante participante, Situacao situacao) {
-        return compromissoRepository.findAllByParticipantes(participante).stream()
+    public List<Compromisso> listaCompromissoParticipanteSituacao(Long id, Situacao situacao) {
+        return compromissoRepository.findById(id).stream()
                 .filter(compromisso -> compromisso.getSituacao().equals(situacao))
                 .collect(Collectors.toList());
     }
 
-    public List<Compromisso> listaCompromissoParticipante(Participante participante){
-        return compromissoRepository.findAllByParticipantes(participante);
+    public Optional<Compromisso> listaCompromissoParticipante(Long id){
+        return compromissoRepository.findById(id);
     }
 
     public boolean validateParticipante(Participante participante, Compromisso compromisso) {
