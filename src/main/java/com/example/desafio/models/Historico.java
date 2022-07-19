@@ -8,6 +8,7 @@ import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
 import javax.persistence.ManyToOne;
 import javax.persistence.PrimaryKeyJoinColumn;
+import java.time.LocalDateTime;
 import java.util.Date;
 
 @Entity
@@ -22,7 +23,7 @@ public class Historico extends GeradorId{
     private Situacao situacao;
 
     @NotNull
-    Date data;
+    LocalDateTime data;
 
     public Compromisso getCompromisso() {
         return compromisso;
@@ -40,11 +41,11 @@ public class Historico extends GeradorId{
         this.situacao = situacao;
     }
 
-    public Date getData() {
+    public LocalDateTime getData() {
         return data;
     }
 
-    public void setData(Date data) {
+    public void setData(LocalDateTime data) {
         this.data = data;
     }
 }

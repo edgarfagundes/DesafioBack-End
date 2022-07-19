@@ -58,6 +58,7 @@ public class CompromissoService {
     }
 
     public Compromisso update(Long id, Compromisso compromisso) {
+        Historico historico = new Historico();
         this.compromissoRepository.findById(id).map(c -> {
             if (compromissoRepository.existsById(id) && compromissoRepository.findById(id).get().getSituacao().equals(Situacao.EXECUTADO) ||
                     compromissoRepository.existsById(id) && compromissoRepository.findById(id).get().getSituacao().equals(Situacao.CANCELADO)) {
@@ -69,7 +70,10 @@ public class CompromissoService {
             c.setParticipantes(compromisso.getParticipantes());
             c.setLocalidade(compromisso.getLocalidade());
             c.setSituacao(compromisso.getSituacao());
-            return this.compromissoRepository.save(c);
+            Compromisso compromissoSave = this.compromissoRepository.save(c);
+            historico.setCompromisso(compromissoSave);
+            historicoService.save(historico);
+            return compromissoSave;
         });
         return null;
     }

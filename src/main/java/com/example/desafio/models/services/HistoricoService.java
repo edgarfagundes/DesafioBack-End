@@ -40,7 +40,6 @@ public class HistoricoService {
     public Historico save(Historico historico) {
         try {
             return historicoRepository.save(historico);
-
         } catch (NullPointerException n) {
             throw new NullPointerException();
         }
@@ -60,5 +59,9 @@ public class HistoricoService {
             historicoRepository.delete(historico);
         }
         throw new IllegalArgumentException("não rolou");
+    }
+
+    public Historico findHistorcoCompromisso(Long id) {
+        return historicoRepository.findAllByCompromisso_Id(id);
     }
 }

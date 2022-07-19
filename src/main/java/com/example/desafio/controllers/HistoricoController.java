@@ -1,5 +1,6 @@
 package com.example.desafio.controllers;
 
+import com.example.desafio.models.Compromisso;
 import com.example.desafio.models.Historico;
 import com.example.desafio.models.Localidade;
 import com.example.desafio.models.services.HistoricoService;
@@ -32,6 +33,11 @@ public class HistoricoController {
     @GetMapping("/{id}")
     public Optional<Historico> findById(@PathVariable Long id) {
         return historicoService.findById(id);
+    }
+
+    @GetMapping("/compromisso/{id}")
+    public Historico findHistoricoCompromisso(@PathVariable Long id){
+        return historicoService.findHistorcoCompromisso(id);
     }
 
 }
