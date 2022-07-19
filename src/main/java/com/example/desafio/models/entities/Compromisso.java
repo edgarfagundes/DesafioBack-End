@@ -1,17 +1,13 @@
-package com.example.desafio.models;
+package com.example.desafio.models.entities;
 
 import com.example.desafio.models.enums.Situacao;
-import com.fasterxml.jackson.annotation.JsonFormat;
 import com.sun.istack.NotNull;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToOne;
 import java.time.LocalDateTime;
-import java.util.Date;
 import java.util.List;
 
 @Entity

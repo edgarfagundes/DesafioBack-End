@@ -1,6 +1,6 @@
 package com.example.desafio.models.services;
 
-import com.example.desafio.models.Historico;
+import com.example.desafio.models.entities.Historico;
 import com.example.desafio.models.repository.CompromissoRepository;
 import com.example.desafio.models.repository.HistoricoRepository;
 import org.springframework.beans.factory.annotation.Autowired;

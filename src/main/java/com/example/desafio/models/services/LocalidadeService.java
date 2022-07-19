@@ -1,14 +1,11 @@
 package com.example.desafio.models.services;
 
-import com.example.desafio.models.Localidade;
-import com.example.desafio.models.Participante;
+import com.example.desafio.models.entities.Localidade;
 import com.example.desafio.models.repository.CompromissoRepository;
 import com.example.desafio.models.repository.LocalidadeRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;

@@ -1,4 +1,4 @@
-package com.example.desafio.models;
+package com.example.desafio.models.entities;
 
 import com.sun.istack.NotNull;
 

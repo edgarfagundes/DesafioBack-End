@@ -1,10 +1,9 @@
-package com.example.desafio.models;
+package com.example.desafio.models.entities;
 
 import com.sun.istack.NotNull;
 
 import javax.persistence.Entity;
 import javax.persistence.PrimaryKeyJoinColumn;
-import java.util.Locale;
 
 @Entity
 @PrimaryKeyJoinColumn(name = "id")

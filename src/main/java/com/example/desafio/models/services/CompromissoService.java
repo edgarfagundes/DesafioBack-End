@@ -1,8 +1,8 @@
 package com.example.desafio.models.services;
 
-import com.example.desafio.models.Compromisso;
-import com.example.desafio.models.Historico;
-import com.example.desafio.models.Participante;
+import com.example.desafio.models.entities.Compromisso;
+import com.example.desafio.models.entities.Historico;
+import com.example.desafio.models.entities.Participante;
 import com.example.desafio.models.enums.Situacao;
 import com.example.desafio.models.repository.CompromissoRepository;
 import org.springframework.beans.factory.annotation.Autowired;

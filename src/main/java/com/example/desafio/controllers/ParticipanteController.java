@@ -1,7 +1,7 @@
 package com.example.desafio.controllers;
 
-import com.example.desafio.models.Compromisso;
-import com.example.desafio.models.Participante;
+import com.example.desafio.models.entities.Compromisso;
+import com.example.desafio.models.entities.Participante;
 import com.example.desafio.models.enums.Situacao;
 import com.example.desafio.models.services.CompromissoService;
 import com.example.desafio.models.services.ParticipanteService;

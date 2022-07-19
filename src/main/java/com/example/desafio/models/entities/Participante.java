@@ -1,12 +1,9 @@
-package com.example.desafio.models;
+package com.example.desafio.models.entities;
 
 import com.sun.istack.NotNull;
-import net.bytebuddy.agent.builder.AgentBuilder;
 
 import javax.persistence.Entity;
-import javax.persistence.OneToMany;
 import javax.persistence.PrimaryKeyJoinColumn;
-import java.util.List;
 
 @Entity
 @PrimaryKeyJoinColumn(name = "id")

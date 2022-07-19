@@ -1,15 +1,12 @@
-package com.example.desafio.models;
+package com.example.desafio.models.entities;
 
 import com.example.desafio.models.enums.Situacao;
 import com.sun.istack.NotNull;
 
 import javax.persistence.Entity;
-import javax.persistence.Inheritance;
-import javax.persistence.InheritanceType;
 import javax.persistence.ManyToOne;
 import javax.persistence.PrimaryKeyJoinColumn;
 import java.time.LocalDateTime;
-import java.util.Date;
 
 @Entity
 @PrimaryKeyJoinColumn(name = "id")
