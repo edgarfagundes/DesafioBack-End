@@ -15,6 +15,15 @@ public class Participante extends GeradorId{
     @NotNull
     private String telefone;
 
+    public Participante(String nome, String telefone) {
+        this.nome = nome;
+        this.telefone = telefone;
+    }
+
+    public Participante() {
+
+    }
+
     public String getNome() {
         return nome;
     }

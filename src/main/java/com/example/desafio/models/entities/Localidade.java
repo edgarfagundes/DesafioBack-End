@@ -9,6 +9,16 @@ import javax.persistence.PrimaryKeyJoinColumn;
 @PrimaryKeyJoinColumn(name = "id")
 public class Localidade extends GeradorId{
 
+    public Localidade(String nome, String longitude, String latitude) {
+        this.nome = nome;
+        this.longitude = longitude;
+        this.latitude = latitude;
+    }
+
+    public Localidade() {
+
+    }
+
     @NotNull
     private String nome;
 

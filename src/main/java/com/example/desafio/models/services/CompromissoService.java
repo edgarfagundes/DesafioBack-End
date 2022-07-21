@@ -41,10 +41,11 @@ public class CompromissoService {
         return null;
     }
 
-    public Compromisso save(Compromisso compromisso, Participante participante) {
+    public Compromisso save(Compromisso compromisso) {
+        Participante participante =  compromisso.getParticipantes().stream().iterator().next();
         this.compromissoRepository.findById(participante.getId()).map(c -> {
-            if (compromissoRepository.existsById(participante.getId()) && compromissoRepository.findById(participante.getId()).get().getSituacao().equals(Situacao.EXECUTADO) ||
-                    compromissoRepository.existsById(participante.getId()) && compromissoRepository.findById(participante.getId()).get().getSituacao().equals(Situacao.CANCELADO)) {
+            if (compromissoRepository.findById(participante.getId()).get().getSituacao().equals(Situacao.EXECUTADO) ||
+                   compromissoRepository.findById(participante.getId()).get().getSituacao().equals(Situacao.CANCELADO)) {
                 throw new IllegalArgumentException("Não rolou");
             }
             c.setDataHora(compromisso.getDataHora());

@@ -12,15 +12,25 @@ import java.time.LocalDateTime;
 @PrimaryKeyJoinColumn(name = "id")
 public class Historico extends GeradorId{
 
+
     @NotNull
     @ManyToOne
-    Compromisso compromisso;
+    private Compromisso compromisso;
 
     @NotNull
     private Situacao situacao;
 
     @NotNull
-    LocalDateTime data;
+    private LocalDateTime data;
+
+    public Historico(Compromisso compromisso, Situacao situacao, LocalDateTime data) {
+        this.compromisso = compromisso;
+        this.situacao = situacao;
+        this.data = data;
+    }
+
+    public Historico() {
+    }
 
     public Compromisso getCompromisso() {
         return compromisso;
