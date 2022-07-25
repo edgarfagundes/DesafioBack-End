@@ -31,4 +31,10 @@ public class HistoricoControllerTest {
         mockMvc.perform(get("/historicos/{id}", 1L))
                 .andExpect(status().isOk());
     }
+
+    @Test
+    public void testandoMetodoGeParaBuscarTodosOsHistoricosPorCompromisso() throws Exception {
+        mockMvc.perform(get("/historicos/compromisso/{id}", 1L))
+                .andExpect(status().isOk());
+    }
 }
