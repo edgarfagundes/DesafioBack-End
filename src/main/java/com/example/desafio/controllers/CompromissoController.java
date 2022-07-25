@@ -42,7 +42,7 @@ public class CompromissoController {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public Optional<Compromisso> addCompromisso(@RequestBody Compromisso compromisso) {
+    public Compromisso addCompromisso(@RequestBody Compromisso compromisso) {
         return compromissoService.save(compromisso);
     }
 

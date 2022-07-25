@@ -42,9 +42,9 @@ public class CompromissoService {
         }
     }
 
-    public Optional<Compromisso> save(Compromisso compromisso) {
+    public Compromisso save(Compromisso compromisso) {
         Participante participante = (compromisso.getParticipantes().iterator().hasNext()) ? compromisso.getParticipantes().stream().iterator().next() : null;
-        Optional<Compromisso> compromissoValue = this.compromissoRepository.findById(participante.getId()).map(c -> {
+             this.compromissoRepository.findById(participante.getId()).map(c -> {
             c.setDataHora(compromisso.getDataHora());
             c.setDescricao(compromisso.getDescricao());
             c.setParticipantes(compromisso.getParticipantes());
@@ -52,7 +52,7 @@ public class CompromissoService {
             c.setSituacao(compromisso.getSituacao());
             return this.compromissoRepository.save(c);
         });
-        return compromissoValue;
+        return compromisso;
     }
 
     public Optional<Compromisso> update(Long id, Compromisso compromisso) {

@@ -65,7 +65,7 @@ public class ParticipanteController {
 
     @PutMapping("/{id}")
     @ResponseStatus(HttpStatus.ACCEPTED)
-    public Optional<Participante> updateParticipante(@PathVariable Long id, @RequestBody Participante participante) {
+    public Participante updateParticipante(@PathVariable Long id, @RequestBody Participante participante) {
         return participanteService.update(id, participante);
     }
 

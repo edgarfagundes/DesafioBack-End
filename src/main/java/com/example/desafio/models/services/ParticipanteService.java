@@ -45,18 +45,17 @@ public class ParticipanteService {
         return participanteRepository.save(participante);
     }
 
-    public Optional<Participante> update(Long id, Participante participante) {
-        Optional<Participante> participanteValue = this.participanteRepository.findById(id).map(p -> {
+    public Participante update(Long id, Participante participante) {
+        this.participanteRepository.findById(id).map(p -> {
             if (compromissoRepository.existsById(id)) {
                 p.setNome(participante.getNome());
                 p.setTelefone(participante.getTelefone());
 
                 return this.participanteRepository.save(p);
             }
-
             throw new IllegalArgumentException("Não rolou");
         });
-        return participanteValue;
+        return participante;
     }
 
     public void delete(Long id) {
