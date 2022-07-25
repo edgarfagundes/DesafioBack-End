@@ -1,6 +1,7 @@
 package com.example.desafio.models.services;
 
 import com.example.desafio.models.entities.Localidade;
+import com.example.desafio.models.entities.Participante;
 import com.example.desafio.models.enums.Situacao;
 import com.example.desafio.models.repository.CompromissoRepository;
 import com.example.desafio.models.repository.LocalidadeRepository;
@@ -38,22 +39,28 @@ public class LocalidadeService {
         return null;
     }
 
-    public Localidade save(Localidade participante) {
-        try {
-            return localidadeRepository.save(participante);
-
-        } catch (NullPointerException n) {
-            throw new NullPointerException();
-        }
-    }
-
-    public Localidade update(Localidade localidade) {
+    public Localidade save(Localidade localidade) {
         try {
             return localidadeRepository.save(localidade);
 
         } catch (NullPointerException n) {
             throw new NullPointerException();
         }
+    }
+
+        public Localidade update(Long id, Localidade localidade) {
+            this.localidadeRepository.findById(id).map(l -> {
+                if (compromissoRepository.existsById(id)) {
+                    throw new IllegalArgumentException("Não rolou");
+                }
+                l.setNome(localidade.getNome());
+                l.setLatitude(localidade.getLatitude());
+                l.setLongitude(localidade.getLongitude());
+                Localidade localidadeSave = this.localidadeRepository.save(l);
+
+                return localidadeSave;
+            });
+            return null;
     }
 
     public void delete(Long id) {

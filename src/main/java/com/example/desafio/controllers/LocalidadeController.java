@@ -38,7 +38,7 @@ public class LocalidadeController {
     @PutMapping("{id}")
     @ResponseStatus(HttpStatus.ACCEPTED)
     public Localidade updateLocalidade(@PathVariable Long id,@RequestBody Localidade localidade) {
-        return localidadeService.update(localidade);
+        return localidadeService.update(id, localidade);
     }
 
     @DeleteMapping("{id}")
