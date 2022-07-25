@@ -6,8 +6,6 @@ import com.example.desafio.models.entities.Participante;
 import com.example.desafio.models.enums.Situacao;
 import com.example.desafio.models.repository.CompromissoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
@@ -29,7 +27,7 @@ public class CompromissoService {
             return compromissoRepository.findById(id);
         } catch (NullPointerException n) {
             n.getMessage();
-            return null;
+            return compromissoRepository.findById(id);
         }
     }
 
@@ -55,9 +53,9 @@ public class CompromissoService {
         return compromisso;
     }
 
-    public Optional<Compromisso> update(Long id, Compromisso compromisso) {
+    public Compromisso update(Long id, Compromisso compromisso) {
         Historico historico = new Historico();
-        Optional<Compromisso> compromissoValue = this.compromissoRepository.findById(id).map(c -> {
+         this.compromissoRepository.findById(id).map(c -> {
             if (compromissoRepository.existsById(id) && compromissoRepository.findById(id).get().getSituacao().equals(Situacao.EXECUTADO) ||
                     compromissoRepository.existsById(id) && compromissoRepository.findById(id).get().getSituacao().equals(Situacao.CANCELADO)) {
                 throw new IllegalArgumentException("Não rolou");
@@ -76,7 +74,7 @@ public class CompromissoService {
             historicoService.save(historico);
             return compromissoSave;
         });
-        return compromissoValue;
+        return compromisso;
     }
 
     public void delete(Long id) {
