@@ -5,12 +5,14 @@ import com.example.desafio.models.entities.Historico;
 import com.example.desafio.models.entities.Participante;
 import com.example.desafio.models.enums.Situacao;
 import com.example.desafio.models.repository.CompromissoRepository;
+import com.example.desafio.models.repository.ParticipanteRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
+import java.util.function.Function;
 import java.util.stream.Collectors;
 
 @Service
@@ -20,14 +22,16 @@ public class CompromissoService {
     CompromissoRepository compromissoRepository;
 
     @Autowired
+    ParticipanteRepository participanteRepository;
+
+    @Autowired
     HistoricoService historicoService;
 
     public Optional<Compromisso> findById(Long id) {
-        try {
+        if (compromissoRepository.existsById(id)) {
             return compromissoRepository.findById(id);
-        } catch (NullPointerException n) {
-            n.getMessage();
-            return compromissoRepository.findById(id);
+        }else {
+            throw new IllegalArgumentException("Id não encontrado");
         }
     }
 
@@ -41,16 +45,7 @@ public class CompromissoService {
     }
 
     public Compromisso save(Compromisso compromisso) {
-        Participante participante = (compromisso.getParticipantes().iterator().hasNext()) ? compromisso.getParticipantes().stream().iterator().next() : null;
-             this.compromissoRepository.findById(participante.getId()).map(c -> {
-            c.setDataHora(compromisso.getDataHora());
-            c.setDescricao(compromisso.getDescricao());
-            c.setParticipantes(compromisso.getParticipantes());
-            c.setLocalidade(compromisso.getLocalidade());
-            c.setSituacao(compromisso.getSituacao());
-            return this.compromissoRepository.save(c);
-        });
-        return compromisso;
+            return compromissoRepository.save(compromisso);
     }
 
     public Compromisso update(Long id, Compromisso compromisso) {
@@ -84,8 +79,8 @@ public class CompromissoService {
                 throw new IllegalArgumentException("Entity cannot be deleted");
             } else {
                 this.compromissoRepository.deleteById(id);
+                return null;
             }
-            return null;
         });
     }
 

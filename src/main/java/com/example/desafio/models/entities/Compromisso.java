@@ -22,11 +22,11 @@ public class Compromisso extends GeradorId {
     private String descricao;
 
     @NotNull
-    @ManyToMany(cascade = CascadeType.ALL)
+    @ManyToMany
     private List<Participante> participantes;
 
     @NotNull
-    @OneToOne(cascade = CascadeType.ALL)
+    @OneToOne
     private Localidade localidade;
 
     @NotNull
