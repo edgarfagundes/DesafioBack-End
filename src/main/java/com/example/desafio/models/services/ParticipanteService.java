@@ -47,14 +47,11 @@ public class ParticipanteService {
 
     public Participante update(Long id, Participante participante) {
         this.participanteRepository.findById(id).map(p -> {
-            if (compromissoRepository.existsById(id)) {
                 p.setNome(participante.getNome());
                 p.setTelefone(participante.getTelefone());
 
                 return this.participanteRepository.save(p);
-            }
-            throw new IllegalArgumentException("Não rolou");
-        });
+        }).orElseThrow(IllegalArgumentException::new);
         return participante;
     }
 

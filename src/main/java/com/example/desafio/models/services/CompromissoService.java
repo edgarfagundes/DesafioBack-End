@@ -12,7 +12,6 @@ import org.springframework.stereotype.Service;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
-import java.util.function.Function;
 import java.util.stream.Collectors;
 
 @Service
@@ -85,13 +84,15 @@ public class CompromissoService {
     }
 
     public List<Compromisso> listaCompromissoParticipanteSituacao(Long id, Situacao situacao) {
-        return compromissoRepository.findById(id).stream()
+        Optional<Participante> participante = participanteRepository.findById(id);
+        return compromissoRepository.findAllByParticipantes(participante).stream()
                 .filter(compromisso -> compromisso.getSituacao().equals(situacao))
                 .collect(Collectors.toList());
     }
 
-    public Optional<Compromisso> listaCompromissoParticipante(Long id) {
-        return compromissoRepository.findById(id);
+    public List<Compromisso> listaCompromissoParticipante(Long id) {
+        Optional<Participante> participante = participanteRepository.findById(id);
+        return compromissoRepository.findAllByParticipantes(participante);
     }
 
     public boolean validateParticipante(Participante participante, Compromisso compromisso) {

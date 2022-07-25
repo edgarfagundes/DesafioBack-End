@@ -8,6 +8,7 @@ import org.springframework.stereotype.Repository;
 
 
 import java.util.List;
+import java.util.Optional;
 
 
 @Repository
@@ -19,4 +20,6 @@ public interface CompromissoRepository extends JpaRepository<Compromisso, Long> 
 
 
     List<Compromisso> findAllByLocalidade(Localidade localidade);
+
+    List<Compromisso> findAllByParticipantes(Optional<Participante> participante);
 }

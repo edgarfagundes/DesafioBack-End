@@ -3,6 +3,7 @@ package com.example.desafio.models.entities;
 import com.example.desafio.models.enums.Situacao;
 import com.sun.istack.NotNull;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.ManyToOne;
 import javax.persistence.PrimaryKeyJoinColumn;
@@ -14,7 +15,7 @@ public class Historico extends GeradorId{
 
 
     @NotNull
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.MERGE)
     private Compromisso compromisso;
 
     @NotNull

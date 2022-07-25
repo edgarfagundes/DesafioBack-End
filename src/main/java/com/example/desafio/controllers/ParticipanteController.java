@@ -46,7 +46,7 @@ public class ParticipanteController {
 
     @GetMapping("/{id}/compromissos")
     @ResponseStatus(HttpStatus.OK)
-    public Optional<Compromisso> listaCompromisso(@PathVariable Long id){
+    public List<Compromisso> listaCompromisso(@PathVariable Long id){
         return compromissoService.listaCompromissoParticipante(id);
     }
 
