@@ -48,8 +48,8 @@ public class LocalidadeService {
         }
     }
 
-        public Optional<Localidade> update(Long id, Localidade localidade) {
-            Optional<Localidade> localidadeValue = this.localidadeRepository.findById(id).map(l -> {
+        public Localidade update(Long id, Localidade localidade) {
+             this.localidadeRepository.findById(id).map(l -> {
                 if (localidadeRepository.existsById(id)) {
                     l.setNome(localidade.getNome());
                     l.setLatitude(localidade.getLatitude());
@@ -60,7 +60,7 @@ public class LocalidadeService {
 
                 throw new IllegalArgumentException("Não rolou");
             });
-            return localidadeValue;
+            return localidade;
     }
 
     public void delete(Long id) {

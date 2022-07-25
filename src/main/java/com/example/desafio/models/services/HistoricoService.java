@@ -45,8 +45,8 @@ public class HistoricoService {
         }
     }
 
-    public Optional<Historico> update(Long id, Historico historico) {
-        Optional<Historico> historicovalue = this.historicoRepository.findById(id).map(h -> {
+    public Historico update(Long id, Historico historico) {
+        this.historicoRepository.findById(id).map(h -> {
             if (historicoRepository.existsById(id)) {
                 h.setCompromisso(historico.getCompromisso());
                 h.setSituacao(historico.getSituacao());
@@ -56,7 +56,7 @@ public class HistoricoService {
             }
             throw new IllegalArgumentException("Não rolou");
         });
-        return historicovalue;
+        return historico;
     }
 
     public void delete(Historico historico) {
