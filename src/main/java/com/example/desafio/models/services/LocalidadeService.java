@@ -56,9 +56,8 @@ public class LocalidadeService {
                 l.setNome(localidade.getNome());
                 l.setLatitude(localidade.getLatitude());
                 l.setLongitude(localidade.getLongitude());
-                Localidade localidadeSave = this.localidadeRepository.save(l);
 
-                return localidadeSave;
+                return this.localidadeRepository.save(l);
             });
             return null;
     }
