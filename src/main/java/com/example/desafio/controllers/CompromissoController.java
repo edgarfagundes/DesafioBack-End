@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.List;
 import java.util.Optional;
 
 @RestController
@@ -29,8 +30,8 @@ public class CompromissoController {
 
     @GetMapping
     @ResponseStatus(HttpStatus.OK)
-    public Page<Compromisso> findAll(Pageable pageable) {
-        return compromissoService.findAll(pageable);
+    public List<Compromisso> findAll() {
+        return compromissoService.findAll();
     }
 
     @GetMapping("/{id}")
@@ -41,13 +42,13 @@ public class CompromissoController {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public Compromisso addCompromisso(@RequestBody Compromisso compromisso) {
+    public Optional<Compromisso> addCompromisso(@RequestBody Compromisso compromisso) {
         return compromissoService.save(compromisso);
     }
 
     @PutMapping("{id}")
     @ResponseStatus(HttpStatus.ACCEPTED)
-    public Compromisso updateCompromisso(@PathVariable Long id, @RequestBody Compromisso compromisso) {
+    public Optional<Compromisso> updateCompromisso(@PathVariable Long id, @RequestBody Compromisso compromisso) {
         return compromissoService.update(id, compromisso);
     }
 

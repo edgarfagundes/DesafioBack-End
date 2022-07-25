@@ -18,22 +18,19 @@ public class HistoricoControllerTest {
     @Autowired
     MockMvc mockMvc;
 
-    @Autowired
-    ObjectMapper objectMapper;
-
     @Test
-    public void testandoMetodoGeParaBuscarTodosOsHistoricos() throws Exception {
+    public void testandoMetodoGetParaBuscarTodosOsHistoricos() throws Exception {
         mockMvc.perform(get("/historicos")).andExpect(status().isOk());
     }
 
     @Test
-    public void testandoMetodoGeParaBuscarTodosOsHistoricosPorId() throws Exception {
+    public void testandoMetodoGetParaBuscarTodosOsHistoricosPorId() throws Exception {
         mockMvc.perform(get("/historicos/{id}", 1L))
                 .andExpect(status().isOk());
     }
 
     @Test
-    public void testandoMetodoGeParaBuscarTodosOsHistoricosPorCompromisso() throws Exception {
+    public void testandoMetodoGetParaBuscarTodosOsHistoricosPorCompromisso() throws Exception {
         mockMvc.perform(get("/historicos/compromisso/{id}", 1L))
                 .andExpect(status().isOk());
     }

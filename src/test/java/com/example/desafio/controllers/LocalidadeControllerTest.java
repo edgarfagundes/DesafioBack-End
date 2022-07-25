@@ -28,12 +28,12 @@ public class LocalidadeControllerTest {
     ObjectMapper objectMapper;
 
     @Test
-    public void testandoMetodoGeParaBuscarTodasAsLocalidades() throws Exception {
+    public void testandoMetodoGetParaBuscarTodasAsLocalidades() throws Exception {
         mockMvc.perform(get("/localidades")).andExpect(status().isOk());
     }
 
     @Test
-    public void testandoMetodoGeParaBuscarTodasAsLocalidadePorId() throws Exception {
+    public void testandoMetodoGetParaBuscarTodasAsLocalidadePorId() throws Exception {
         mockMvc.perform(get("/localidades/{id}", 1L))
                 .andExpect(status().isOk());
     }

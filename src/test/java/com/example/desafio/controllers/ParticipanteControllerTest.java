@@ -41,7 +41,7 @@ public class ParticipanteControllerTest {
 
 
     @Test
-    public void testandoMetodoGeParaBuscarTodosOsParticipantes() throws Exception {
+    public void testandoMetodoGetParaBuscarTodosOsParticipantes() throws Exception {
         mockMvc.perform(get("/participantes")).andExpect(status().isOk());
     }
 

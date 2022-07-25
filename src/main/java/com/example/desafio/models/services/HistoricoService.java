@@ -25,7 +25,7 @@ public class HistoricoService {
         } catch (NullPointerException n) {
             n.getMessage();
         }
-        return null;
+        return Optional.empty();
     }
 
     public Page<Historico> findAll(Pageable pageable) {
@@ -33,8 +33,8 @@ public class HistoricoService {
             return historicoRepository.findAll(pageable);
         } catch (NullPointerException n) {
             n.getMessage();
+            return historicoRepository.findAll(pageable);
         }
-        return null;
     }
 
     public Historico save(Historico historico) {
@@ -45,22 +45,22 @@ public class HistoricoService {
         }
     }
 
-    public Historico update(Long id, Historico historico) {
-        this.historicoRepository.findById(id).map(h -> {
+    public Optional<Historico> update(Long id, Historico historico) {
+        Optional<Historico> historicovalue = this.historicoRepository.findById(id).map(h -> {
             if (historicoRepository.existsById(id)) {
-                throw new IllegalArgumentException("Não rolou");
-            }
-           h.setCompromisso(historico.getCompromisso());
-            h.setSituacao(historico.getSituacao());
-            h.setData(historico.getData());
+                h.setCompromisso(historico.getCompromisso());
+                h.setSituacao(historico.getSituacao());
+                h.setData(historico.getData());
 
-            return this.historicoRepository.save(h);
+                return this.historicoRepository.save(h);
+            }
+            throw new IllegalArgumentException("Não rolou");
         });
-        return null;
+        return historicovalue;
     }
 
     public void delete(Historico historico) {
-        if (compromissoRepository.existsById(historico.getId())){
+        if (compromissoRepository.existsById(historico.getId())) {
             historicoRepository.delete(historico);
         }
         throw new IllegalArgumentException("não rolou");

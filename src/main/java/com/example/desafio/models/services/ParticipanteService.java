@@ -11,6 +11,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -28,49 +29,47 @@ public class ParticipanteService {
         } catch (NullPointerException n) {
             n.getMessage();
         }
-        return null;
+        return Optional.empty();
     }
 
-    public Page<Participante> findAll(Pageable pageable) {
+    public List<Participante> findAll() {
         try {
-            return participanteRepository.findAll(pageable);
+            return participanteRepository.findAll();
         } catch (NullPointerException n) {
             n.getMessage();
+            return participanteRepository.findAll();
         }
-        return null;
     }
 
     public Participante save(Participante participante) {
-            return participanteRepository.save(participante);
+        return participanteRepository.save(participante);
     }
 
-    public Participante update(Long id, Participante participante) {
-        this.participanteRepository.findById(id).map(p -> {
+    public Optional<Participante> update(Long id, Participante participante) {
+        Optional<Participante> participanteValue = this.participanteRepository.findById(id).map(p -> {
             if (compromissoRepository.existsById(id)) {
-                throw new IllegalArgumentException("Não rolou");
-            }
-            p.setNome(participante.getNome());
-            p.setTelefone(participante.getTelefone());
-            Participante participanteSave = this.participanteRepository.save(p);
+                p.setNome(participante.getNome());
+                p.setTelefone(participante.getTelefone());
 
-            return participanteSave;
+                return this.participanteRepository.save(p);
+            }
+
+            throw new IllegalArgumentException("Não rolou");
         });
-        return null;
+        return participanteValue;
     }
 
     public void delete(Long id) {
         this.participanteRepository.findById(id).map(p -> {
             if (participanteRepository.existsById(id)) {
+                this.participanteRepository.deleteById(id);
+            } else {
                 throw new IllegalArgumentException("Entity cannot be deleted");
             }
-            else {
-                this.participanteRepository.deleteById(id);
-            }
-            return null;
+            return p;
         });
     }
-    
 
-    
+
 }
 

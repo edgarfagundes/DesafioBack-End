@@ -34,8 +34,8 @@ public class ParticipanteController {
 
     @GetMapping
     @ResponseStatus(HttpStatus.OK)
-    public Page<Participante> findAll(Pageable pageable) {
-        return participanteService.findAll(pageable);
+    public List<Participante> findAll() {
+        return participanteService.findAll();
     }
 
     @GetMapping("/{id}")
@@ -65,7 +65,7 @@ public class ParticipanteController {
 
     @PutMapping("/{id}")
     @ResponseStatus(HttpStatus.ACCEPTED)
-    public Participante updateParticipante(@PathVariable Long id, @RequestBody Participante participante) {
+    public Optional<Participante> updateParticipante(@PathVariable Long id, @RequestBody Participante participante) {
         return participanteService.update(id, participante);
     }
 

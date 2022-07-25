@@ -29,26 +29,22 @@ public class CompromissoService {
             return compromissoRepository.findById(id);
         } catch (NullPointerException n) {
             n.getMessage();
+            return null;
         }
-        return null;
     }
 
-    public Page<Compromisso> findAll(Pageable pageable) {
+    public List<Compromisso> findAll() {
         try {
-            return compromissoRepository.findAll(pageable);
+            return compromissoRepository.findAll();
         } catch (NullPointerException n) {
             n.getMessage();
+            return compromissoRepository.findAll();
         }
-        return null;
     }
 
-    public Compromisso save(Compromisso compromisso) {
+    public Optional<Compromisso> save(Compromisso compromisso) {
         Participante participante = (compromisso.getParticipantes().iterator().hasNext()) ? compromisso.getParticipantes().stream().iterator().next() : null;
-        this.compromissoRepository.findById(participante.getId()).map(c -> {
-            if (compromissoRepository.findById(participante.getId()).get().getSituacao().equals(Situacao.EXECUTADO) ||
-                   compromissoRepository.findById(participante.getId()).get().getSituacao().equals(Situacao.CANCELADO)) {
-                throw new IllegalArgumentException("Não rolou");
-            }
+        Optional<Compromisso> compromissoValue = this.compromissoRepository.findById(participante.getId()).map(c -> {
             c.setDataHora(compromisso.getDataHora());
             c.setDescricao(compromisso.getDescricao());
             c.setParticipantes(compromisso.getParticipantes());
@@ -56,13 +52,12 @@ public class CompromissoService {
             c.setSituacao(compromisso.getSituacao());
             return this.compromissoRepository.save(c);
         });
-        return null;
+        return compromissoValue;
     }
 
-    public Compromisso update(Long id, Compromisso compromisso) {
-        Historico historico = new Historico(compromisso, compromisso.getSituacao(), LocalDateTime.now());
-        historicoService.save(historico);
-        this.compromissoRepository.findById(id).map(c -> {
+    public Optional<Compromisso> update(Long id, Compromisso compromisso) {
+        Historico historico = new Historico();
+        Optional<Compromisso> compromissoValue = this.compromissoRepository.findById(id).map(c -> {
             if (compromissoRepository.existsById(id) && compromissoRepository.findById(id).get().getSituacao().equals(Situacao.EXECUTADO) ||
                     compromissoRepository.existsById(id) && compromissoRepository.findById(id).get().getSituacao().equals(Situacao.CANCELADO)) {
                 throw new IllegalArgumentException("Não rolou");
@@ -74,11 +69,14 @@ public class CompromissoService {
             c.setLocalidade(compromisso.getLocalidade());
             c.setSituacao(compromisso.getSituacao());
             Compromisso compromissoSave = this.compromissoRepository.save(c);
+
             historico.setCompromisso(compromissoSave);
+            historico.setData(LocalDateTime.now());
+            historico.setSituacao(c.getSituacao());
             historicoService.save(historico);
             return compromissoSave;
         });
-        return null;
+        return compromissoValue;
     }
 
     public void delete(Long id) {
@@ -86,10 +84,9 @@ public class CompromissoService {
             if (compromissoRepository.existsById(id) && compromissoRepository.findById(id).get().getSituacao().equals(Situacao.EXECUTADO) ||
                     compromissoRepository.existsById(id) && compromissoRepository.findById(id).get().getSituacao().equals(Situacao.CANCELADO)) {
                 throw new IllegalArgumentException("Entity cannot be deleted");
+            } else {
+                this.compromissoRepository.deleteById(id);
             }
-             else {
-                 this.compromissoRepository.deleteById(id);
-             }
             return null;
         });
     }
@@ -100,7 +97,7 @@ public class CompromissoService {
                 .collect(Collectors.toList());
     }
 
-    public Optional<Compromisso> listaCompromissoParticipante(Long id){
+    public Optional<Compromisso> listaCompromissoParticipante(Long id) {
         return compromissoRepository.findById(id);
     }
 

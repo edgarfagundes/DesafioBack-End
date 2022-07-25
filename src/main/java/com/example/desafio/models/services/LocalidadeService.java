@@ -27,7 +27,7 @@ public class LocalidadeService {
         } catch (NullPointerException n) {
             n.getMessage();
         }
-        return null;
+        return Optional.empty();
     }
 
     public Page<Localidade> findAll(Pageable pageable) {
@@ -35,8 +35,8 @@ public class LocalidadeService {
             return localidadeRepository.findAll(pageable);
         } catch (NullPointerException n) {
             n.getMessage();
+            return localidadeRepository.findAll(pageable);
         }
-        return null;
     }
 
     public Localidade save(Localidade localidade) {
@@ -48,29 +48,30 @@ public class LocalidadeService {
         }
     }
 
-        public Localidade update(Long id, Localidade localidade) {
-            this.localidadeRepository.findById(id).map(l -> {
+        public Optional<Localidade> update(Long id, Localidade localidade) {
+            Optional<Localidade> localidadeValue = this.localidadeRepository.findById(id).map(l -> {
                 if (localidadeRepository.existsById(id)) {
-                    throw new IllegalArgumentException("Não rolou");
-                }
-                l.setNome(localidade.getNome());
-                l.setLatitude(localidade.getLatitude());
-                l.setLongitude(localidade.getLongitude());
+                    l.setNome(localidade.getNome());
+                    l.setLatitude(localidade.getLatitude());
+                    l.setLongitude(localidade.getLongitude());
 
-                return this.localidadeRepository.save(l);
+                    return this.localidadeRepository.save(l);
+                }
+
+                throw new IllegalArgumentException("Não rolou");
             });
-            return null;
+            return localidadeValue;
     }
 
     public void delete(Long id) {
         this.localidadeRepository.findById(id).map(l -> {
             if (localidadeRepository.existsById(id) ) {
-                throw new IllegalArgumentException("Entity cannot be deleted");
-            }
-            else {
                 this.localidadeRepository.deleteById(id);
             }
-            return null;
+            else {
+                throw new IllegalArgumentException("Entity cannot be deleted");
+            }
+            return l;
         });
     }
 }

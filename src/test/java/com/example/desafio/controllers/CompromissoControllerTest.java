@@ -4,6 +4,7 @@ import com.example.desafio.models.entities.Compromisso;
 import com.example.desafio.models.entities.Localidade;
 import com.example.desafio.models.entities.Participante;
 import com.example.desafio.models.enums.Situacao;
+import com.example.desafio.models.repository.CompromissoRepository;
 import com.example.desafio.models.repository.LocalidadeRepository;
 import com.example.desafio.models.repository.ParticipanteRepository;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -39,9 +40,12 @@ public class CompromissoControllerTest {
     @Autowired
     LocalidadeRepository localidadeRepository;
 
+    @Autowired
+    CompromissoRepository compromissoRepository;
+
 
     @Test
-    public void testandoMetodoGeParaBuscarTodosOsCompromissos() throws Exception {
+    public void testandoMetodoGetParaBuscarTodosOsCompromissos() throws Exception {
         mockMvc.perform(get("/compromissos")).andExpect(status().isOk());
     }
 
@@ -52,7 +56,7 @@ public class CompromissoControllerTest {
     }
 
     @Test
-    public void testandoMetodoPostCompromisso() throws Exception{
+    public void testandoMetodoPostCompromisso() throws Exception {
         Participante participante = new Participante("Edgar", 524534634);
         participanteRepository.save(participante);
 
@@ -61,7 +65,7 @@ public class CompromissoControllerTest {
 
         mockMvc.perform(post("/compromissos")
                         .contentType(MediaType.APPLICATION_JSON)
-                        .content(objectMapper.writeValueAsString(new Compromisso(LocalDateTime.now(), "teste", List.of(participante), localidade, Situacao.PENDENTE ))))
+                        .content(objectMapper.writeValueAsString(new Compromisso(LocalDateTime.now(), "teste", List.of(participante), localidade, Situacao.PENDENTE))))
                 .andExpect(status().isCreated());
     }
 
@@ -72,9 +76,10 @@ public class CompromissoControllerTest {
 
         Localidade localidade = new Localidade("Teste", "dfsddgs", "vdvsdbsbs");
         localidadeRepository.save(localidade);
+
         mockMvc.perform(put("/compromissos/{id}", 1L)
                         .contentType(MediaType.APPLICATION_JSON)
-                        .content(objectMapper.writeValueAsString(new Compromisso(LocalDateTime.now(), "teste", List.of(participante), localidade, Situacao.PENDENTE ))))
+                        .content(objectMapper.writeValueAsString(new Compromisso(LocalDateTime.now(), "Olá", List.of(participante), localidade, Situacao.PENDENTE))))
                 .andExpect(status().isAccepted());
     }
 
