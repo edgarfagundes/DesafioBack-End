@@ -50,7 +50,7 @@ public class LocalidadeService {
 
         public Localidade update(Long id, Localidade localidade) {
             this.localidadeRepository.findById(id).map(l -> {
-                if (compromissoRepository.existsById(id)) {
+                if (localidadeRepository.existsById(id)) {
                     throw new IllegalArgumentException("Não rolou");
                 }
                 l.setNome(localidade.getNome());

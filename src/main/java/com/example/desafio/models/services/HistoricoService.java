@@ -45,13 +45,18 @@ public class HistoricoService {
         }
     }
 
-    public Historico update(Historico historico) {
-        try {
-            return historicoRepository.save(historico);
+    public Historico update(Long id, Historico historico) {
+        this.historicoRepository.findById(id).map(h -> {
+            if (historicoRepository.existsById(id)) {
+                throw new IllegalArgumentException("Não rolou");
+            }
+           h.setCompromisso(historico.getCompromisso());
+            h.setSituacao(historico.getSituacao());
+            h.setData(historico.getData());
 
-        } catch (NullPointerException n) {
-            throw new NullPointerException();
-        }
+            return this.historicoRepository.save(h);
+        });
+        return null;
     }
 
     public void delete(Historico historico) {
