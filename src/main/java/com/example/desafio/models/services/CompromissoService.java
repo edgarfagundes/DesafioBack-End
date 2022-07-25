@@ -10,6 +10,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -42,7 +43,7 @@ public class CompromissoService {
     }
 
     public Compromisso save(Compromisso compromisso) {
-        Participante participante =  compromisso.getParticipantes().stream().iterator().next();
+        Participante participante = (compromisso.getParticipantes().iterator().hasNext()) ? compromisso.getParticipantes().stream().iterator().next() : null;
         this.compromissoRepository.findById(participante.getId()).map(c -> {
             if (compromissoRepository.findById(participante.getId()).get().getSituacao().equals(Situacao.EXECUTADO) ||
                    compromissoRepository.findById(participante.getId()).get().getSituacao().equals(Situacao.CANCELADO)) {
@@ -59,7 +60,8 @@ public class CompromissoService {
     }
 
     public Compromisso update(Long id, Compromisso compromisso) {
-        Historico historico = new Historico();
+        Historico historico = new Historico(compromisso, compromisso.getSituacao(), LocalDateTime.now());
+        historicoService.save(historico);
         this.compromissoRepository.findById(id).map(c -> {
             if (compromissoRepository.existsById(id) && compromissoRepository.findById(id).get().getSituacao().equals(Situacao.EXECUTADO) ||
                     compromissoRepository.existsById(id) && compromissoRepository.findById(id).get().getSituacao().equals(Situacao.CANCELADO)) {

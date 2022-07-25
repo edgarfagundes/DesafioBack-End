@@ -1,7 +1,9 @@
 package com.example.desafio.models.services;
 
+import com.example.desafio.models.entities.Compromisso;
 import com.example.desafio.models.entities.Participante;
 
+import com.example.desafio.models.enums.Situacao;
 import com.example.desafio.models.repository.CompromissoRepository;
 import com.example.desafio.models.repository.ParticipanteRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -43,16 +45,29 @@ public class ParticipanteService {
     }
 
     public Participante update(Long id, Participante participante) {
-        if (participante.getId().equals(id)){
-            return participanteRepository.save(participante);
-        }
-        throw new NullPointerException("num quero não");
+        this.participanteRepository.findById(id).map(p -> {
+            if (compromissoRepository.existsById(id)) {
+                throw new IllegalArgumentException("Não rolou");
+            }
+            p.setNome(participante.getNome());
+            p.setTelefone(participante.getTelefone());
+            Participante participanteSave = this.participanteRepository.save(p);
+
+            return participanteSave;
+        });
+        return null;
     }
 
     public void delete(Long id) {
-         participanteRepository.findById(id).filter(p ->
-                compromissoRepository.findAllByParticipantes(p).stream().anyMatch(compromisso -> p.equals(compromisso.getParticipantes())))
-                 .orElseThrow();
+        this.participanteRepository.findById(id).map(p -> {
+            if (participanteRepository.existsById(id)) {
+                throw new IllegalArgumentException("Entity cannot be deleted");
+            }
+            else {
+                this.participanteRepository.deleteById(id);
+            }
+            return null;
+        });
     }
     
 

@@ -4,6 +4,7 @@ import com.sun.istack.NotNull;
 
 import javax.persistence.Entity;
 import javax.persistence.PrimaryKeyJoinColumn;
+import javax.persistence.criteria.CriteriaBuilder;
 
 @Entity
 @PrimaryKeyJoinColumn(name = "id")
@@ -13,9 +14,9 @@ public class Participante extends GeradorId{
     private String nome;
 
     @NotNull
-    private String telefone;
+    private Integer telefone;
 
-    public Participante(String nome, String telefone) {
+    public Participante(String nome, Integer telefone) {
         this.nome = nome;
         this.telefone = telefone;
     }
@@ -32,11 +33,11 @@ public class Participante extends GeradorId{
         this.nome = nome;
     }
 
-    public String getTelefone() {
+    public Integer getTelefone() {
         return telefone;
     }
 
-    public void setTelefone(String telefone) {
+    public void setTelefone(Integer telefone) {
         this.telefone = telefone;
     }
 

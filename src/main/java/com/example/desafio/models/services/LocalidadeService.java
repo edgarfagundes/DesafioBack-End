@@ -1,6 +1,7 @@
 package com.example.desafio.models.services;
 
 import com.example.desafio.models.entities.Localidade;
+import com.example.desafio.models.enums.Situacao;
 import com.example.desafio.models.repository.CompromissoRepository;
 import com.example.desafio.models.repository.LocalidadeRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -55,10 +56,15 @@ public class LocalidadeService {
         }
     }
 
-    public void delete(Localidade localidade) {
-        if (compromissoRepository.existsById(localidade.getId())){
-            localidadeRepository.delete(localidade);
-        }
-        throw new IllegalArgumentException("não rolou");
+    public void delete(Long id) {
+        this.localidadeRepository.findById(id).map(l -> {
+            if (localidadeRepository.existsById(id) ) {
+                throw new IllegalArgumentException("Entity cannot be deleted");
+            }
+            else {
+                this.localidadeRepository.deleteById(id);
+            }
+            return null;
+        });
     }
 }
