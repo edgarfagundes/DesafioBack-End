@@ -41,24 +41,19 @@ public class CompromissoService {
     }
 
     public Compromisso save(Compromisso compromisso) {
-        List<Compromisso> compromissos = compromissoRepository.findAllByParticipantes(compromisso.getParticipantes().stream().iterator().next());
-        if (compromissoRepository.findAllByParticipantes(compromisso.getParticipantes())
-                .stream().map(c -> c.getDataHora().format(DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm"))).anyMatch(compromissos.stream().)) {
-            throw new IllegalArgumentException("Não pode ser no mesmo horário");
+        List<Compromisso> compromissos = compromissoRepository.findAllByParticipantes(compromisso.getParticipantes().iterator().next());
+        if (!compromissos.isEmpty()) {
+            throw new IllegalArgumentException("Não pode mais de um compromisso por participante");
         }
         return compromissoRepository.save(compromisso);
     }
 
     public Compromisso update(Long id, Compromisso compromisso) {
         Historico historico = new Historico();
-
         this.compromissoRepository.findById(id).map(c -> {
             if (compromissoRepository.findById(id).get().getSituacao().equals(Situacao.EXECUTADO) ||
                     compromissoRepository.findById(id).get().getSituacao().equals(Situacao.CANCELADO)) {
                 throw new IllegalArgumentException("Não rolou");
-            } else if (compromissos.stream().map(co -> co.getDataHora().format(DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm")))
-                    .equals(compromissos.listIterator().next().getDataHora().format(DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm")))) {
-                throw new IllegalArgumentException("Não pode ser no mesmo horário");
             }
 
             c.setDataHora(compromisso.getDataHora());
