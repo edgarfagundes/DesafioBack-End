@@ -36,7 +36,7 @@ public class CompromissoController {
 
     @GetMapping("/{id}")
     @ResponseStatus(HttpStatus.OK)
-    public Optional<Compromisso> findById(@PathVariable Long id) {
+    public Compromisso findById(@PathVariable Long id) {
         return compromissoService.findById(id);
     }
 

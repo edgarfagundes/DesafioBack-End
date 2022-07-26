@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -26,12 +27,8 @@ public class CompromissoService {
     @Autowired
     HistoricoService historicoService;
 
-    public Optional<Compromisso> findById(Long id) {
-        if (compromissoRepository.existsById(id)) {
-            return compromissoRepository.findById(id);
-        }else {
-            throw new IllegalArgumentException("Id não encontrado");
-        }
+    public Compromisso findById(Long id) {
+        return compromissoRepository.findById(id).orElseThrow(IllegalArgumentException::new);
     }
 
     public List<Compromisso> findAll() {
@@ -44,15 +41,24 @@ public class CompromissoService {
     }
 
     public Compromisso save(Compromisso compromisso) {
-            return compromissoRepository.save(compromisso);
+        List<Compromisso> compromissos = compromissoRepository.findAllByParticipantes(compromisso.getParticipantes().stream().iterator().next());
+        if (compromissoRepository.findAllByParticipantes(compromisso.getParticipantes())
+                .stream().map(c -> c.getDataHora().format(DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm"))).anyMatch(compromissos.stream().)) {
+            throw new IllegalArgumentException("Não pode ser no mesmo horário");
+        }
+        return compromissoRepository.save(compromisso);
     }
 
     public Compromisso update(Long id, Compromisso compromisso) {
         Historico historico = new Historico();
-         this.compromissoRepository.findById(id).map(c -> {
-            if (compromissoRepository.existsById(id) && compromissoRepository.findById(id).get().getSituacao().equals(Situacao.EXECUTADO) ||
-                    compromissoRepository.existsById(id) && compromissoRepository.findById(id).get().getSituacao().equals(Situacao.CANCELADO)) {
+
+        this.compromissoRepository.findById(id).map(c -> {
+            if (compromissoRepository.findById(id).get().getSituacao().equals(Situacao.EXECUTADO) ||
+                    compromissoRepository.findById(id).get().getSituacao().equals(Situacao.CANCELADO)) {
                 throw new IllegalArgumentException("Não rolou");
+            } else if (compromissos.stream().map(co -> co.getDataHora().format(DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm")))
+                    .equals(compromissos.listIterator().next().getDataHora().format(DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm")))) {
+                throw new IllegalArgumentException("Não pode ser no mesmo horário");
             }
 
             c.setDataHora(compromisso.getDataHora());
@@ -63,7 +69,7 @@ public class CompromissoService {
             Compromisso compromissoSave = this.compromissoRepository.save(c);
 
             historico.setCompromisso(compromissoSave);
-            historico.setData(LocalDateTime.now());
+            historico.setData(c.getDataHora());
             historico.setSituacao(c.getSituacao());
             historicoService.save(historico);
             return compromissoSave;
@@ -73,8 +79,8 @@ public class CompromissoService {
 
     public void delete(Long id) {
         this.compromissoRepository.findById(id).map(c -> {
-            if (compromissoRepository.existsById(id) && compromissoRepository.findById(id).get().getSituacao().equals(Situacao.EXECUTADO) ||
-                    compromissoRepository.existsById(id) && compromissoRepository.findById(id).get().getSituacao().equals(Situacao.CANCELADO)) {
+            if (compromissoRepository.findById(id).get().getSituacao().equals(Situacao.EXECUTADO) ||
+                    compromissoRepository.findById(id).get().getSituacao().equals(Situacao.CANCELADO)) {
                 throw new IllegalArgumentException("Entity cannot be deleted");
             } else {
                 this.compromissoRepository.deleteById(id);
@@ -84,14 +90,14 @@ public class CompromissoService {
     }
 
     public List<Compromisso> listaCompromissoParticipanteSituacao(Long id, Situacao situacao) {
-        Optional<Participante> participante = participanteRepository.findById(id);
+        Participante participante = participanteRepository.findById(id).orElseThrow(IllegalArgumentException::new);
         return compromissoRepository.findAllByParticipantes(participante).stream()
                 .filter(compromisso -> compromisso.getSituacao().equals(situacao))
                 .collect(Collectors.toList());
     }
 
     public List<Compromisso> listaCompromissoParticipante(Long id) {
-        Optional<Participante> participante = participanteRepository.findById(id);
+        Participante participante = participanteRepository.findById(id).orElseThrow(IllegalArgumentException::new);
         return compromissoRepository.findAllByParticipantes(participante);
     }
 
