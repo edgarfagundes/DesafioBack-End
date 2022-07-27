@@ -1,13 +1,12 @@
 package com.example.desafio.controllers;
 
 import com.example.desafio.models.entities.Compromisso;
-import com.example.desafio.models.entities.Participante;
 import com.example.desafio.models.services.CompromissoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -36,24 +35,24 @@ public class CompromissoController {
 
     @GetMapping("/{id}")
     @ResponseStatus(HttpStatus.OK)
-    public Compromisso findById(@PathVariable Long id) {
+    public Optional<Compromisso> findById(@PathVariable Long id) {
         return compromissoService.findById(id);
     }
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     public Compromisso addCompromisso(@RequestBody Compromisso compromisso) {
-        return compromissoService.save(compromisso);
-    }
+        return compromissoService.save(compromisso);}
 
     @PutMapping("{id}")
     @ResponseStatus(HttpStatus.ACCEPTED)
-    public Compromisso updateCompromisso(@PathVariable Long id, @RequestBody Compromisso compromisso) {
-        return compromissoService.update(id, compromisso);
+    public void updateCompromisso(@PathVariable Long id, @RequestBody Compromisso compromisso) {
+        compromissoService.update(id, compromisso);
     }
 
     @DeleteMapping("{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
+    @Transactional
     public void delete(@PathVariable Long id) {
         compromissoService.delete(id);
     }

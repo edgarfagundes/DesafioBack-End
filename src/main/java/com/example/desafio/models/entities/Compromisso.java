@@ -1,14 +1,11 @@
 package com.example.desafio.models.entities;
 
 import com.example.desafio.models.enums.Situacao;
-import com.sun.istack.NotNull;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Entity;
-import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToOne;
+import javax.validation.constraints.NotNull;
 import java.time.LocalDateTime;
 import java.util.List;
 

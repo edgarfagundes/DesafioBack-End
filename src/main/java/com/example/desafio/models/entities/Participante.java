@@ -1,10 +1,9 @@
 package com.example.desafio.models.entities;
 
-import com.sun.istack.NotNull;
 
 import javax.persistence.Entity;
 import javax.persistence.PrimaryKeyJoinColumn;
-import javax.persistence.criteria.CriteriaBuilder;
+import javax.validation.constraints.NotNull;
 
 @Entity
 @PrimaryKeyJoinColumn(name = "id")

@@ -1,5 +1,6 @@
 package com.example.desafio.models.services;
 
+import com.example.desafio.models.entities.Compromisso;
 import com.example.desafio.models.entities.Historico;
 import com.example.desafio.models.repository.CompromissoRepository;
 import com.example.desafio.models.repository.HistoricoRepository;
@@ -8,6 +9,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -20,42 +22,36 @@ public class HistoricoService {
     CompromissoRepository compromissoRepository;
 
     public Optional<Historico> findById(Long id) {
-        try {
+        Boolean c = compromissoRepository.existsById(id);
+        if (c.equals(true)){
             return historicoRepository.findById(id);
-        } catch (NullPointerException n) {
-            n.getMessage();
         }
-        return Optional.empty();
+        throw new IllegalArgumentException("Id não encontrado.");
     }
 
     public Page<Historico> findAll(Pageable pageable) {
-        try {
-            return historicoRepository.findAll(pageable);
-        } catch (NullPointerException n) {
-            n.getMessage();
-            return historicoRepository.findAll(pageable);
+        if (compromissoRepository.findAll(pageable).isEmpty()){
+            throw new IllegalArgumentException("Não existem compromissos");
         }
+        return historicoRepository.findAll(pageable);
     }
-
     public Historico save(Historico historico) {
-        try {
             return historicoRepository.save(historico);
-        } catch (NullPointerException n) {
-            throw new NullPointerException();
-        }
     }
 
     public Historico update(Long id, Historico historico) {
+        if (historico.getId().equals(id)){
         this.historicoRepository.findById(id).map(h -> {
-            if (historicoRepository.existsById(id)) {
                 h.setCompromisso(historico.getCompromisso());
                 h.setSituacao(historico.getSituacao());
                 h.setData(historico.getData());
 
                 return this.historicoRepository.save(h);
-            }
-            throw new IllegalArgumentException("Não rolou");
         });
+        }else {
+            throw new IllegalArgumentException("Erro ao salvar alterações");
+        }
+
         return historico;
     }
 
@@ -63,10 +59,29 @@ public class HistoricoService {
         if (compromissoRepository.existsById(historico.getId())) {
             historicoRepository.delete(historico);
         }
-        throw new IllegalArgumentException("não rolou");
+        throw new IllegalArgumentException("Não é possível deletar histórico.");
     }
 
     public Historico findHistorcoCompromisso(Long id) {
+        if (compromissoRepository.existsById(id)){
         return historicoRepository.findAllByCompromisso_Id(id);
     }
+        throw new IllegalArgumentException("Id não encontrado");
+    }
+
+    public List<Historico> findAllByCompromisso(Long id){
+        if (historicoRepository.existsById(id)) {
+            return historicoRepository.findAllByCompromisso(id);
+        }
+        throw new IllegalArgumentException("Id não encontrado");
+    }
+
+    public void deleteAllByCompromisso(Compromisso compromisso){
+        if (compromissoRepository.existsById(compromisso.getId())) {
+            historicoRepository.deleteAllByCompromisso(compromisso);
+        }
+        throw new IllegalArgumentException("Id não encontrado");
+    }
+
+
 }
