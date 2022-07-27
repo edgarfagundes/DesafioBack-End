@@ -61,13 +61,8 @@ public class LocalidadeService {
 
     public void delete(Long id) {
         this.localidadeRepository.findById(id).map(l -> {
-            if (localidadeRepository.existsById(id) ) {
                 this.localidadeRepository.deleteById(id);
-            }
-            else {
-                throw new IllegalArgumentException("Entity cannot be deleted");
-            }
-            return l;
-        });
+                return id;
+        }).orElseThrow(NullPointerException::new);
     }
 }

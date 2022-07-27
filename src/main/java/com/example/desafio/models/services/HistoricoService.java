@@ -1,5 +1,6 @@
 package com.example.desafio.models.services;
 
+import com.example.desafio.models.entities.Compromisso;
 import com.example.desafio.models.entities.Historico;
 import com.example.desafio.models.repository.CompromissoRepository;
 import com.example.desafio.models.repository.HistoricoRepository;
@@ -8,6 +9,8 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import java.util.IllformedLocaleException;
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -47,15 +50,12 @@ public class HistoricoService {
 
     public Historico update(Long id, Historico historico) {
         this.historicoRepository.findById(id).map(h -> {
-            if (historicoRepository.existsById(id)) {
                 h.setCompromisso(historico.getCompromisso());
                 h.setSituacao(historico.getSituacao());
                 h.setData(historico.getData());
 
                 return this.historicoRepository.save(h);
-            }
-            throw new IllegalArgumentException("Não rolou");
-        });
+        }).orElseThrow(IllegalArgumentException::new);
         return historico;
     }
 
@@ -69,4 +69,14 @@ public class HistoricoService {
     public Historico findHistorcoCompromisso(Long id) {
         return historicoRepository.findAllByCompromisso_Id(id);
     }
+
+    public List<Historico> findAllByCompromisso(Long id){
+        return historicoRepository.findAllByCompromisso(id);
+    }
+
+    public void deleteAllByCompromisso(Compromisso compromisso){
+        historicoRepository.deleteAllByCompromisso(compromisso);
+    }
+
+
 }

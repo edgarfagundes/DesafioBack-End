@@ -47,27 +47,23 @@ public class ParticipanteService {
     }
 
     public Participante save(Participante participante) {
-            return participanteRepository.save(participante);
+        return participanteRepository.save(participante);
     }
 
     public Participante update(Long id, Participante participante) {
         this.participanteRepository.findById(id).map(p -> {
-                p.setNome(participante.getNome());
-                p.setTelefone(participante.getTelefone());
+            p.setNome(participante.getNome());
+            p.setTelefone(participante.getTelefone());
 
-                return this.participanteRepository.save(p);
+            return this.participanteRepository.save(p);
         }).orElseThrow(IllegalArgumentException::new);
         return participante;
     }
 
     public void delete(Long id) {
         this.participanteRepository.findById(id).map(p -> {
-            if (participanteRepository.existsById(id)) {
-                this.participanteRepository.deleteById(id);
-            } else {
-                throw new IllegalArgumentException("Entity cannot be deleted");
-            }
-            return p;
+            this.participanteRepository.deleteById(id);
+            return id;
         });
     }
 

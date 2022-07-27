@@ -42,10 +42,11 @@ public class CompromissoService {
 
     public Compromisso save(Compromisso compromisso) {
         List<Compromisso> compromissos = compromissoRepository.findAllByParticipantes(compromisso.getParticipantes().iterator().next());
-        if (!compromissos.isEmpty()) {
+        if ((!compromissos.isEmpty()) || compromissos.stream().iterator().next().getSituacao().equals(Situacao.PENDENTE)) {
             throw new IllegalArgumentException("Não pode mais de um compromisso por participante");
+        }else {
+            return compromissoRepository.save(compromisso);
         }
-        return compromissoRepository.save(compromisso);
     }
 
     public Compromisso update(Long id, Compromisso compromisso) {
@@ -73,11 +74,13 @@ public class CompromissoService {
     }
 
     public void delete(Long id) {
+        Compromisso compromisso = compromissoRepository.findById(id).orElseThrow(NullPointerException::new);
         this.compromissoRepository.findById(id).map(c -> {
             if (compromissoRepository.findById(id).get().getSituacao().equals(Situacao.EXECUTADO) ||
                     compromissoRepository.findById(id).get().getSituacao().equals(Situacao.CANCELADO)) {
                 throw new IllegalArgumentException("Entity cannot be deleted");
             } else {
+                this.historicoService.deleteAllByCompromisso(compromisso);
                 this.compromissoRepository.deleteById(id);
                 return null;
             }
