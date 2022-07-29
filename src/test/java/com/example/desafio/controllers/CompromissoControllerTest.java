@@ -51,7 +51,7 @@ public class CompromissoControllerTest {
 
     @Test
     public void testandoMetodoGeParaBuscarTodosOsCompromissoPorId() throws Exception {
-        mockMvc.perform(get("/compromissos/{id}", 1L))
+        mockMvc.perform(get("/compromissos/{id}", 215))
                 .andExpect(status().isOk());
     }
 

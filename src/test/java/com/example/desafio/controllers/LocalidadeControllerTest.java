@@ -34,7 +34,7 @@ public class LocalidadeControllerTest {
 
     @Test
     public void testandoMetodoGetParaBuscarTodasAsLocalidadePorId() throws Exception {
-        mockMvc.perform(get("/localidades/{id}", 1L))
+        mockMvc.perform(get("/localidades/{id}", 6))
                 .andExpect(status().isOk());
     }
 
@@ -50,7 +50,7 @@ public class LocalidadeControllerTest {
     @Test
     public void testandoMetodoPutLocalidade() throws Exception {
 
-        mockMvc.perform(put("/localidades/{id}", 1L)
+        mockMvc.perform(put("/localidades/{id}", 6)
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(new Localidade("teste", "teste2", "teste3"))))
                 .andExpect(status().isAccepted());

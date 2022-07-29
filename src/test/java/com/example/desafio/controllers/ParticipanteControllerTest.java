@@ -47,13 +47,13 @@ public class ParticipanteControllerTest {
 
     @Test
     public void testandoMetodoGeParaBuscarTodosOsCompromissoPorId() throws Exception {
-        mockMvc.perform(get("/participantes/{id}", 1L))
+        mockMvc.perform(get("/participantes/{id}", 195))
                 .andExpect(status().isOk());
     }
 
     @Test
     public void testandoMetodoGetParaBuscarTodosOsCompromissoPorSituacao() throws Exception {
-        mockMvc.perform(get("/participantes/{id}/{situacao}", 1L,PENDENTE))
+        mockMvc.perform(get("/participantes/{id}/{situacao}", 195, PENDENTE))
                 .andExpect(status().isOk());
     }
 
@@ -68,9 +68,9 @@ public class ParticipanteControllerTest {
 
     @Test
     public void testandoMetodoPutParticipante() throws Exception {
-        mockMvc.perform(put("/participantes/{id}", 1L)
+        mockMvc.perform(put("/participantes/{id}", 236)
                         .contentType(MediaType.APPLICATION_JSON)
-                        .content(objectMapper.writeValueAsString(new Participante("teste", 1243432))))
+                        .content(objectMapper.writeValueAsString(new Participante( "teste", 1243432))))
                 .andExpect(status().isAccepted());
     }
 

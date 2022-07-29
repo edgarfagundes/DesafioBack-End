@@ -38,7 +38,7 @@ public class ParticipanteService {
     }
 
     public Participante update(Long id, Participante participante) {
-        if (participante.getId().equals(id)){
+        if (participanteRepository.existsById(id)){
         this.participanteRepository.findById(id).map(p -> {
             p.setNome(participante.getNome());
             p.setTelefone(participante.getTelefone());

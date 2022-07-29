@@ -25,7 +25,7 @@ public class HistoricoControllerTest {
 
     @Test
     public void testandoMetodoGetParaBuscarTodosOsHistoricosPorId() throws Exception {
-        mockMvc.perform(get("/historicos/{id}", 1L))
+        mockMvc.perform(get("/historicos/{id}", 210))
                 .andExpect(status().isOk());
     }
 
