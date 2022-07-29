@@ -6,4 +6,5 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface ParticipanteRepository extends JpaRepository<Participante, Long> {
+    Participante findAllById(Long id);
 }

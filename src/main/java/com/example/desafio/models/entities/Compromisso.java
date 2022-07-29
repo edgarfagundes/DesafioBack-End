@@ -12,21 +12,21 @@ import java.util.List;
 @Entity
 public class Compromisso extends GeradorId {
 
-    @NotNull
+    @NotNull(message = "Hora obrigatória.")
     private LocalDateTime dataHora;
 
-    @NotNull
+    @NotNull(message = "Descrição obrigatória.")
     private String descricao;
 
-    @NotNull
+    @NotNull(message = "Particioante(s) obrigatório(s).")
     @ManyToMany
     private List<Participante> participantes;
 
-    @NotNull
+    @NotNull(message = "Localidade obrigatória.")
     @OneToOne
     private Localidade localidade;
 
-    @NotNull
+    @NotNull(message = "Situação obrigatória.")
     private Situacao situacao;
 
     public Compromisso(LocalDateTime dataHora, String descricao, List<Participante> participantes, Localidade localidade, Situacao situacao) {

@@ -8,6 +8,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
+import javax.transaction.Transactional;
 import java.util.Optional;
 
 @RestController
@@ -31,18 +32,21 @@ public class LocalidadeController {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
+    @Transactional
     public Localidade addLocalidade(@RequestBody Localidade localidade) {
         return localidadeService.save(localidade);
     }
 
     @PutMapping("{id}")
     @ResponseStatus(HttpStatus.ACCEPTED)
+    @Transactional
     public Localidade updateLocalidade(@PathVariable Long id,@RequestBody Localidade localidade) {
         return localidadeService.update(id, localidade);
     }
 
     @DeleteMapping("{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
+    @Transactional
     public void deleteLocalidade(@PathVariable Long id){
         localidadeService.delete(id);
     }

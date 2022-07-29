@@ -12,7 +12,7 @@ public interface HistoricoRepository extends JpaRepository<Historico, Long> {
 
     Historico findAllByCompromisso_Id(Long id);
 
-    List<Historico> findAllByCompromisso(Long id);
+    List<Historico> findAllByCompromisso(Compromisso compromisso);
 
     void deleteAllByCompromisso(Compromisso compromisso);
 }

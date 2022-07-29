@@ -19,7 +19,7 @@ public class Localidade extends GeradorId{
 
     }
 
-    @NotNull
+    @NotNull(message = "Nome obrigatório.")
     private String nome;
 
     private String longitude;

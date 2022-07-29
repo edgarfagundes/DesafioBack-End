@@ -22,11 +22,13 @@ public class HistoricoService {
     CompromissoRepository compromissoRepository;
 
     public Optional<Historico> findById(Long id) {
-        Boolean c = compromissoRepository.existsById(id);
+        Optional<Historico> h = historicoRepository.findById(id);
+        Boolean c = compromissoRepository.existsById(h.get().getCompromisso().getId());
         if (c.equals(true)){
-            return historicoRepository.findById(id);
+            return h;
+        }else {
+            throw new IllegalArgumentException("Id não encontrado.");
         }
-        throw new IllegalArgumentException("Id não encontrado.");
     }
 
     public Page<Historico> findAll(Pageable pageable) {
@@ -56,31 +58,19 @@ public class HistoricoService {
     }
 
     public void delete(Historico historico) {
-        if (compromissoRepository.existsById(historico.getId())) {
             historicoRepository.delete(historico);
-        }
-        throw new IllegalArgumentException("Não é possível deletar histórico.");
     }
 
     public Historico findHistorcoCompromisso(Long id) {
-        if (compromissoRepository.existsById(id)){
         return historicoRepository.findAllByCompromisso_Id(id);
     }
-        throw new IllegalArgumentException("Id não encontrado");
-    }
 
-    public List<Historico> findAllByCompromisso(Long id){
-        if (historicoRepository.existsById(id)) {
-            return historicoRepository.findAllByCompromisso(id);
-        }
-        throw new IllegalArgumentException("Id não encontrado");
+    public List<Historico> findAllByCompromisso(Compromisso compromisso){
+            return historicoRepository.findAllByCompromisso(compromisso);
     }
 
     public void deleteAllByCompromisso(Compromisso compromisso){
-        if (compromissoRepository.existsById(compromisso.getId())) {
             historicoRepository.deleteAllByCompromisso(compromisso);
-        }
-        throw new IllegalArgumentException("Id não encontrado");
     }
 
 

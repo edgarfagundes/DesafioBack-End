@@ -9,10 +9,10 @@ import javax.validation.constraints.NotNull;
 @PrimaryKeyJoinColumn(name = "id")
 public class Participante extends GeradorId{
 
-    @NotNull
+    @NotNull(message = "Nome obrigatório.")
     private String nome;
 
-    @NotNull
+    @NotNull(message = "Telefone obrigatório.")
     private Integer telefone;
 
     public Participante(String nome, Integer telefone) {

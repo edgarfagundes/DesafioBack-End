@@ -16,8 +16,6 @@ public interface CompromissoRepository extends JpaRepository<Compromisso, Long> 
 
     List<Compromisso> findAllByParticipantes(Participante participante);
 
-    List<Compromisso> findAllByParticipantes(Participante... participantes);
-
 
     List<Compromisso> findAllByLocalidade(Localidade localidade);
 

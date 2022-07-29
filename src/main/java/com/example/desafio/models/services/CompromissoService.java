@@ -7,6 +7,7 @@ import com.example.desafio.models.enums.Situacao;
 import com.example.desafio.models.exceptions.ExceptionHandlerClass;
 import com.example.desafio.models.repository.CompromissoRepository;
 import com.example.desafio.models.repository.ParticipanteRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -16,13 +17,13 @@ import java.util.stream.Collectors;
 @Service
 public class CompromissoService {
 
-    private final
+    @Autowired
     CompromissoRepository compromissoRepository;
 
-    private final
+    @Autowired
     ParticipanteRepository participanteRepository;
 
-    private final
+    @Autowired
     HistoricoService historicoService;
 
     public CompromissoService(CompromissoRepository compromissoRepository, ParticipanteRepository participanteRepository, HistoricoService historicoService, ExceptionHandlerClass exceptionHandlerClass) {
@@ -32,23 +33,30 @@ public class CompromissoService {
     }
 
     public Optional<Compromisso> findById(Long id) {
-         Boolean c = compromissoRepository.existsById(id);
-         if (c.equals(true)){
-             return compromissoRepository.findById(id);
-         }
-         throw new IllegalArgumentException("Id não encontrado.");
+        Boolean c = compromissoRepository.existsById(id);
+        if (c.equals(true)) {
+            return compromissoRepository.findById(id);
+        }
+        throw new IllegalArgumentException("Id não encontrado.");
     }
 
     public List<Compromisso> findAll() {
-        if (compromissoRepository.findAll().isEmpty()){
+        if (compromissoRepository.findAll().isEmpty()) {
             throw new IllegalArgumentException("Não existem compromissos");
         }
         return compromissoRepository.findAll();
     }
 
     public Compromisso save(Compromisso compromisso) {
-        List<Compromisso> compromissos = compromissoRepository.findAllByParticipantes(compromisso.getParticipantes().iterator().next());
-        if ((!compromissos.isEmpty()) || compromissos.stream().iterator().next().getSituacao().equals(Situacao.PENDENTE)) {
+        if (compromisso.getParticipantes().isEmpty()){
+            throw new IllegalArgumentException("Passe o participante");
+        }
+
+        List<Compromisso> compromissos = compromissoRepository.findAllByParticipantes(compromisso.getParticipantes().stream().iterator().next());
+        if(compromisso.getParticipantes().isEmpty()){
+            throw new IllegalArgumentException("Campo não possui participante.");
+        }
+        else if (compromissos.stream().anyMatch(c-> c.getSituacao().equals(Situacao.PENDENTE))) {
             throw new IllegalArgumentException("Não pode mais de um compromisso por participante");
         } else {
             return compromissoRepository.save(compromisso);
@@ -77,17 +85,17 @@ public class CompromissoService {
         });
     }
 
-    public void delete(Long id) {
-        Compromisso compromisso = compromissoRepository.findById(id).orElseThrow(NullPointerException::new);
+    public void deleteById(Long id) {
         this.compromissoRepository.findById(id).map(c -> {
-            if (c.getSituacao().equals(Situacao.EXECUTADO) ||
-                    c.getSituacao().equals(Situacao.CANCELADO)) {
+            if (c.getSituacao().equals(Situacao.EXECUTADO) || c.getSituacao().equals(Situacao.CANCELADO)){
                 throw new IllegalArgumentException("Entidade não pode ser deletada.");
-            } else {
-                this.historicoService.deleteAllByCompromisso(compromisso);
-                this.compromissoRepository.deleteById(id);
-                return null;
+            } else if (historicoService.findAllByCompromisso(c).isEmpty()){
+                compromissoRepository.deleteById(id);
+            }else {
+                historicoService.deleteAllByCompromisso(c);
+                compromissoRepository.deleteById(id);
             }
+            return "Apagado";
         });
     }
 

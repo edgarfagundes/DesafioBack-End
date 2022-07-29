@@ -14,14 +14,14 @@ import java.time.LocalDateTime;
 public class Historico extends GeradorId{
 
 
-    @NotNull
+    @NotNull(message = "Comprimisso obrigatório.")
     @ManyToOne(cascade = CascadeType.MERGE)
     private Compromisso compromisso;
 
-    @NotNull
+    @NotNull(message = "Situação obrigatória.")
     private Situacao situacao;
 
-    @NotNull
+    @NotNull(message = "Data obrigatória.")
     private LocalDateTime data;
 
     public Historico(Compromisso compromisso, Situacao situacao, LocalDateTime data) {

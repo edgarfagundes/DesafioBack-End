@@ -51,13 +51,14 @@ public class ParticipanteService {
     }
 
     public void delete(Long id) {
-        if (participanteRepository.existsById(id)){
         this.participanteRepository.findById(id).map(p -> {
-            this.participanteRepository.deleteById(id);
-            return id;
+             if (!compromissoRepository.findAllByParticipantes(p).isEmpty()){
+                throw new IllegalArgumentException("Não pode excluir um participante com compromisso");
+            }else {
+               participanteRepository.deleteById(id);
+            }
+            return "Apagado";
         });
-        }
-        throw new IllegalArgumentException("Não é possível deletar o participante.");
     }
 
 

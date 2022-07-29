@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.transaction.Transactional;
 import java.util.List;
 import java.util.Optional;
 
@@ -59,18 +60,21 @@ public class ParticipanteController {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
+    @Transactional
     public Participante addParticipante(@RequestBody Participante participante) {
         return participanteService.save(participante);
     }
 
     @PutMapping("/{id}")
     @ResponseStatus(HttpStatus.ACCEPTED)
+    @Transactional
     public Participante updateParticipante(@PathVariable Long id, @RequestBody Participante participante) {
         return participanteService.update(id, participante);
     }
 
     @DeleteMapping("/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
+    @Transactional
     public void deleteParticipante(@PathVariable Long id){
         participanteService.delete(id);
     }
