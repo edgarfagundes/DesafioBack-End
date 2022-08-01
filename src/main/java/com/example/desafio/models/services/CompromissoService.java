@@ -8,6 +8,8 @@ import com.example.desafio.models.exceptions.ExceptionHandlerClass;
 import com.example.desafio.models.repository.CompromissoRepository;
 import com.example.desafio.models.repository.ParticipanteRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -40,11 +42,11 @@ public class CompromissoService {
         throw new IllegalArgumentException("Id não encontrado.");
     }
 
-    public List<Compromisso> findAll() {
-        if (compromissoRepository.findAll().isEmpty()) {
+    public Page<Compromisso> findAll(Pageable pageable) {
+        if (compromissoRepository.findAll(pageable).isEmpty()) {
             throw new IllegalArgumentException("Não existem compromissos");
         }
-        return compromissoRepository.findAll();
+        return compromissoRepository.findAll(pageable);
     }
 
     public Compromisso save(Compromisso compromisso) {

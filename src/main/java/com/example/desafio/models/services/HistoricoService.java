@@ -32,8 +32,8 @@ public class HistoricoService {
     }
 
     public Page<Historico> findAll(Pageable pageable) {
-        if (compromissoRepository.findAll(pageable).isEmpty()){
-            throw new IllegalArgumentException("Não existem compromissos");
+        if (historicoRepository.findAll(pageable).isEmpty()){
+            throw new IllegalArgumentException("Não existem históricos");
         }
         return historicoRepository.findAll(pageable);
     }

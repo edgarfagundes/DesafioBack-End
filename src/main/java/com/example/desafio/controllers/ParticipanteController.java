@@ -35,8 +35,8 @@ public class ParticipanteController {
 
     @GetMapping
     @ResponseStatus(HttpStatus.OK)
-    public List<Participante> findAll() {
-        return participanteService.findAll();
+    public Page<Participante> findAll(Pageable pageable) {
+        return participanteService.findAll(pageable);
     }
 
     @GetMapping("/{id}")

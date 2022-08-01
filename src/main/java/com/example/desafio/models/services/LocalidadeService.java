@@ -32,7 +32,7 @@ public class LocalidadeService {
 
     public Page<Localidade> findAll(Pageable pageable) {
         if (localidadeRepository.findAll(pageable).isEmpty()) {
-            throw new IllegalArgumentException("Não existem compromissos");
+            throw new IllegalArgumentException("Não existem localidades");
         }
         return localidadeRepository.findAll(pageable);
     }

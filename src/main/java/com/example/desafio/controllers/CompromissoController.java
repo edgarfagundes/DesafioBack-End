@@ -17,7 +17,6 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.transaction.Transactional;
-import java.util.List;
 import java.util.Optional;
 
 @RestController
@@ -29,8 +28,8 @@ public class CompromissoController {
 
     @GetMapping
     @ResponseStatus(HttpStatus.OK)
-    public List<Compromisso> findAll() {
-        return compromissoService.findAll();
+    public Page<Compromisso> findAll(Pageable pageable) {
+        return compromissoService.findAll(pageable);
     }
 
     @GetMapping("/{id}")
