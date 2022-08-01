@@ -1,6 +1,5 @@
 package com.example.desafio.models.entities;
 
-
 import javax.persistence.Entity;
 import javax.persistence.PrimaryKeyJoinColumn;
 import javax.validation.constraints.NotNull;
@@ -39,5 +38,4 @@ public class Participante extends GeradorId {
     public void setTelefone(Integer telefone) {
         this.telefone = telefone;
     }
-
 }

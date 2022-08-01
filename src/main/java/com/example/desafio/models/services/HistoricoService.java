@@ -73,6 +73,4 @@ public class HistoricoService {
     public void deleteAllByCompromisso(Compromisso compromisso) {
         historicoRepository.deleteAllByCompromisso(compromisso);
     }
-
-
 }

@@ -1,6 +1,5 @@
 package com.example.desafio.models.entities;
 
-
 import javax.persistence.Entity;
 import javax.persistence.PrimaryKeyJoinColumn;
 import javax.validation.constraints.NotNull;

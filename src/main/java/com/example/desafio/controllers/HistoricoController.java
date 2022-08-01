@@ -38,5 +38,4 @@ public class HistoricoController {
     public Historico findHistoricoCompromisso(@PathVariable Long id) {
         return historicoService.findHistorcoCompromisso(id);
     }
-
 }

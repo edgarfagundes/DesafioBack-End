@@ -57,7 +57,6 @@ public class ParticipanteController {
         return compromissoService.listaCompromissoParticipanteSituacao(id, situacao);
     }
 
-
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     @Transactional

@@ -1,6 +1,5 @@
 package com.example.desafio.models.services;
 
-import com.example.desafio.models.entities.Compromisso;
 import com.example.desafio.models.entities.Localidade;
 import com.example.desafio.models.repository.CompromissoRepository;
 import com.example.desafio.models.repository.LocalidadeRepository;
@@ -9,7 +8,6 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -39,7 +37,6 @@ public class LocalidadeService {
     public Localidade save(Localidade localidade) {
         return localidadeRepository.save(localidade);
     }
-
 
     public Localidade update(Long id, Localidade localidade) {
         if (localidadeRepository.existsById(id)) {

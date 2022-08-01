@@ -117,6 +117,4 @@ public class CompromissoService {
                 .stream()
                 .anyMatch(c -> Situacao.PENDENTE.equals(compromisso.getSituacao()) && compromisso.getDataHora().equals(c.getDataHora()));
     }
-
-
 }

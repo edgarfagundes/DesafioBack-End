@@ -13,7 +13,6 @@ import java.time.LocalDateTime;
 @PrimaryKeyJoinColumn(name = "id")
 public class Historico extends GeradorId {
 
-
     @NotNull(message = "Comprimisso obrigatório.")
     @ManyToOne(cascade = CascadeType.MERGE)
     private Compromisso compromisso;
