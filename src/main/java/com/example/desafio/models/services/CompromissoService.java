@@ -52,7 +52,7 @@ public class CompromissoService {
             throw new IllegalArgumentException("Passe o participante");
         }
 
-        List<Compromisso> compromissos = compromissoRepository.findAllByParticipantes(compromisso.getParticipantes().stream().iterator().next());
+        List<Compromisso> compromissos = compromissoRepository.findAllByParticipantesIn(compromisso.getParticipantes());
         if(compromisso.getParticipantes().isEmpty()){
             throw new IllegalArgumentException("Campo não possui participante.");
         }
