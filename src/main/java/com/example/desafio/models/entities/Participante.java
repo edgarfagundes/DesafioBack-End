@@ -7,7 +7,7 @@ import javax.validation.constraints.NotNull;
 
 @Entity
 @PrimaryKeyJoinColumn(name = "id")
-public class Participante extends GeradorId{
+public class Participante extends GeradorId {
 
     @NotNull(message = "Nome obrigatório.")
     private String nome;

@@ -29,7 +29,6 @@ public class LocalidadeService {
         }
     }
 
-
     public Page<Localidade> findAll(Pageable pageable) {
         if (localidadeRepository.findAll(pageable).isEmpty()) {
             throw new IllegalArgumentException("Não existem localidades");
@@ -59,9 +58,9 @@ public class LocalidadeService {
 
     public void delete(Long id) {
         this.localidadeRepository.findById(id).map(l -> {
-            if (!compromissoRepository.findAllByLocalidade(l).isEmpty()){
+            if (!compromissoRepository.findAllByLocalidade(l).isEmpty()) {
                 throw new IllegalArgumentException("Não pode excluir uma localidade com compromisso");
-            }else {
+            } else {
                 localidadeRepository.deleteById(id);
             }
             return "Apagado";

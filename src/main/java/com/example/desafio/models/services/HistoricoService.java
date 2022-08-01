@@ -24,33 +24,34 @@ public class HistoricoService {
     public Optional<Historico> findById(Long id) {
         Optional<Historico> h = historicoRepository.findById(id);
         Boolean c = compromissoRepository.existsById(h.get().getCompromisso().getId());
-        if (c.equals(true)){
+        if (c.equals(true)) {
             return h;
-        }else {
+        } else {
             throw new IllegalArgumentException("Id não encontrado.");
         }
     }
 
     public Page<Historico> findAll(Pageable pageable) {
-        if (historicoRepository.findAll(pageable).isEmpty()){
+        if (historicoRepository.findAll(pageable).isEmpty()) {
             throw new IllegalArgumentException("Não existem históricos");
         }
         return historicoRepository.findAll(pageable);
     }
+
     public Historico save(Historico historico) {
-            return historicoRepository.save(historico);
+        return historicoRepository.save(historico);
     }
 
     public Historico update(Long id, Historico historico) {
-        if (historico.getId().equals(id)){
-        this.historicoRepository.findById(id).map(h -> {
+        if (historico.getId().equals(id)) {
+            this.historicoRepository.findById(id).map(h -> {
                 h.setCompromisso(historico.getCompromisso());
                 h.setSituacao(historico.getSituacao());
                 h.setData(historico.getData());
 
                 return this.historicoRepository.save(h);
-        });
-        }else {
+            });
+        } else {
             throw new IllegalArgumentException("Erro ao salvar alterações");
         }
 
@@ -58,19 +59,19 @@ public class HistoricoService {
     }
 
     public void delete(Historico historico) {
-            historicoRepository.delete(historico);
+        historicoRepository.delete(historico);
     }
 
     public Historico findHistorcoCompromisso(Long id) {
         return historicoRepository.findAllByCompromisso_Id(id);
     }
 
-    public List<Historico> findAllByCompromisso(Compromisso compromisso){
-            return historicoRepository.findAllByCompromisso(compromisso);
+    public List<Historico> findAllByCompromisso(Compromisso compromisso) {
+        return historicoRepository.findAllByCompromisso(compromisso);
     }
 
-    public void deleteAllByCompromisso(Compromisso compromisso){
-            historicoRepository.deleteAllByCompromisso(compromisso);
+    public void deleteAllByCompromisso(Compromisso compromisso) {
+        historicoRepository.deleteAllByCompromisso(compromisso);
     }
 
 

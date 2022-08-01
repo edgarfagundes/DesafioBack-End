@@ -22,14 +22,14 @@ public class ParticipanteService {
     CompromissoRepository compromissoRepository;
 
     public Optional<Participante> findById(Long id) {
-        if (participanteRepository.existsById(id)){
+        if (participanteRepository.existsById(id)) {
             return participanteRepository.findById(id);
         }
         throw new IllegalArgumentException("Id não encontrado.");
     }
 
     public Page<Participante> findAll(Pageable pageable) {
-        if (participanteRepository.findAll(pageable).isEmpty()){
+        if (participanteRepository.findAll(pageable).isEmpty()) {
             throw new IllegalArgumentException("Não existem participantes");
         }
         return participanteRepository.findAll(pageable);
@@ -40,24 +40,24 @@ public class ParticipanteService {
     }
 
     public Participante update(Long id, Participante participante) {
-        if (participanteRepository.existsById(id)){
-        this.participanteRepository.findById(id).map(p -> {
-            p.setNome(participante.getNome());
-            p.setTelefone(participante.getTelefone());
+        if (participanteRepository.existsById(id)) {
+            this.participanteRepository.findById(id).map(p -> {
+                p.setNome(participante.getNome());
+                p.setTelefone(participante.getTelefone());
 
-            return this.participanteRepository.save(p);
-        });
-        return participante;
-    }
+                return this.participanteRepository.save(p);
+            });
+            return participante;
+        }
         throw new IllegalArgumentException("Erro ao salvar alterações");
     }
 
     public void delete(Long id) {
         this.participanteRepository.findById(id).map(p -> {
-             if (!compromissoRepository.findAllByParticipantes(p).isEmpty()){
+            if (!compromissoRepository.findAllByParticipantes(p).isEmpty()) {
                 throw new IllegalArgumentException("Não pode excluir um participante com compromisso");
-            }else {
-               participanteRepository.deleteById(id);
+            } else {
+                participanteRepository.deleteById(id);
             }
             return "Apagado";
         });

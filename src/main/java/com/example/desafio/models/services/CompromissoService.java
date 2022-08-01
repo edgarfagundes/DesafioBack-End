@@ -50,15 +50,14 @@ public class CompromissoService {
     }
 
     public Compromisso save(Compromisso compromisso) {
-        if (compromisso.getParticipantes().isEmpty()){
+        if (compromisso.getParticipantes().isEmpty()) {
             throw new IllegalArgumentException("Passe o participante");
         }
 
         List<Compromisso> compromissos = compromissoRepository.findAllByParticipantesIn(compromisso.getParticipantes());
-        if(compromisso.getParticipantes().isEmpty()){
+        if (compromisso.getParticipantes().isEmpty()) {
             throw new IllegalArgumentException("Campo não possui participante.");
-        }
-        else if (compromissos.stream().anyMatch(c-> c.getSituacao().equals(Situacao.PENDENTE))) {
+        } else if (compromissos.stream().anyMatch(c -> c.getSituacao().equals(Situacao.PENDENTE))) {
             throw new IllegalArgumentException("Não pode mais de um compromisso por participante");
         } else {
             return compromissoRepository.save(compromisso);
@@ -89,11 +88,11 @@ public class CompromissoService {
 
     public void deleteById(Long id) {
         this.compromissoRepository.findById(id).map(c -> {
-            if (c.getSituacao().equals(Situacao.EXECUTADO) || c.getSituacao().equals(Situacao.CANCELADO)){
+            if (c.getSituacao().equals(Situacao.EXECUTADO) || c.getSituacao().equals(Situacao.CANCELADO)) {
                 throw new IllegalArgumentException("Entidade não pode ser deletada.");
-            } else if (historicoService.findAllByCompromisso(c).isEmpty()){
+            } else if (historicoService.findAllByCompromisso(c).isEmpty()) {
                 compromissoRepository.deleteById(id);
-            }else {
+            } else {
                 historicoService.deleteAllByCompromisso(c);
                 compromissoRepository.deleteById(id);
             }

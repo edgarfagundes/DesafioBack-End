@@ -11,7 +11,7 @@ import java.time.LocalDateTime;
 
 @Entity
 @PrimaryKeyJoinColumn(name = "id")
-public class Historico extends GeradorId{
+public class Historico extends GeradorId {
 
 
     @NotNull(message = "Comprimisso obrigatório.")

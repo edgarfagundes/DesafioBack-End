@@ -47,13 +47,13 @@ public class ParticipanteController {
 
     @GetMapping("/{id}/compromissos")
     @ResponseStatus(HttpStatus.OK)
-    public List<Compromisso> listaCompromisso(@PathVariable Long id){
+    public List<Compromisso> listaCompromisso(@PathVariable Long id) {
         return compromissoService.listaCompromissoParticipante(id);
     }
 
     @GetMapping("{id}/{situacao}")
     @ResponseStatus(HttpStatus.OK)
-    public List<Compromisso> listaCompromissoSituacao(@PathVariable Long id, @PathVariable Situacao situacao){
+    public List<Compromisso> listaCompromissoSituacao(@PathVariable Long id, @PathVariable Situacao situacao) {
         return compromissoService.listaCompromissoParticipanteSituacao(id, situacao);
     }
 
@@ -75,7 +75,7 @@ public class ParticipanteController {
     @DeleteMapping("/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     @Transactional
-    public void deleteParticipante(@PathVariable Long id){
+    public void deleteParticipante(@PathVariable Long id) {
         participanteService.delete(id);
     }
 }

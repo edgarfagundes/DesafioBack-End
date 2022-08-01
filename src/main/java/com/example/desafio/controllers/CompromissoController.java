@@ -42,7 +42,8 @@ public class CompromissoController {
     @ResponseStatus(HttpStatus.CREATED)
     @Transactional
     public Compromisso addCompromisso(@RequestBody Compromisso compromisso) {
-        return compromissoService.save(compromisso);}
+        return compromissoService.save(compromisso);
+    }
 
     @PutMapping("{id}")
     @ResponseStatus(HttpStatus.ACCEPTED)

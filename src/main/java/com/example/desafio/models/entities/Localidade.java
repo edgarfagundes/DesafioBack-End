@@ -7,7 +7,7 @@ import javax.validation.constraints.NotNull;
 
 @Entity
 @PrimaryKeyJoinColumn(name = "id")
-public class Localidade extends GeradorId{
+public class Localidade extends GeradorId {
 
     public Localidade(String nome, String longitude, String latitude) {
         this.nome = nome;

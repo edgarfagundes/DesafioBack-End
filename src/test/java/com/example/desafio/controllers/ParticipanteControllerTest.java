@@ -1,9 +1,6 @@
 package com.example.desafio.controllers;
 
-import com.example.desafio.models.entities.Compromisso;
-import com.example.desafio.models.entities.Localidade;
 import com.example.desafio.models.entities.Participante;
-import com.example.desafio.models.enums.Situacao;
 import com.example.desafio.models.repository.LocalidadeRepository;
 import com.example.desafio.models.repository.ParticipanteRepository;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -14,12 +11,11 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 
-import java.time.LocalDateTime;
-import java.util.List;
-
 import static com.example.desafio.models.enums.Situacao.PENDENTE;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 
@@ -58,7 +54,7 @@ public class ParticipanteControllerTest {
     }
 
     @Test
-    public void testandoMetodoPostParticipante() throws Exception{
+    public void testandoMetodoPostParticipante() throws Exception {
 
         mockMvc.perform(post("/participantes")
                         .contentType(MediaType.APPLICATION_JSON)
@@ -70,7 +66,7 @@ public class ParticipanteControllerTest {
     public void testandoMetodoPutParticipante() throws Exception {
         mockMvc.perform(put("/participantes/{id}", 236)
                         .contentType(MediaType.APPLICATION_JSON)
-                        .content(objectMapper.writeValueAsString(new Participante( "teste", 1243432))))
+                        .content(objectMapper.writeValueAsString(new Participante("teste", 1243432))))
                 .andExpect(status().isAccepted());
     }
 
